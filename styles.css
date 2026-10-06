@@ -36,8 +36,8 @@ a { color: inherit; }
 
 .brand {
   display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 9px;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -48,12 +48,15 @@ a { color: inherit; }
   letter-spacing: -0.02em;
 }
 
-.brand-divider,
-.brand-ucla { color: var(--muted); }
+.brand-divider {
+  color: var(--muted);
+  font-size: 1.15rem;
+}
 
-.brand-ucla {
-  font-size: 1.12rem;
-  font-weight: 600;
+.ucla-logo {
+  display: block;
+  width: 66px;
+  height: auto;
 }
 
 .nav {
@@ -212,8 +215,6 @@ h1 {
 
 .footer-links a:hover { border-bottom-color: currentColor; }
 
-/* Mild compression for smaller laptops / higher browser zoom.
-   Crucially: keep the two-column hero. */
 @media (max-width: 1050px) {
   .site-shell {
     width: min(100% - 44px, 1120px);
@@ -230,13 +231,10 @@ h1 {
   }
 
   h1 { font-size: 3.85rem; }
-
   .hero-text { font-size: 1.3rem; }
-
   .canvas-wrap { min-height: 300px; }
 }
 
-/* Only actually stack on tablet/mobile widths. */
 @media (max-width: 760px) {
   .site-shell {
     width: calc(100% - 36px);
@@ -263,13 +261,8 @@ h1 {
     padding: 46px 0 42px;
   }
 
-  h1 {
-    font-size: 3.25rem;
-  }
-
-  .hero-text {
-    font-size: 1.2rem;
-  }
+  h1 { font-size: 3.25rem; }
+  .hero-text { font-size: 1.2rem; }
 
   .canvas-wrap {
     aspect-ratio: 1.35 / 1;
@@ -289,7 +282,6 @@ h1 {
   }
 
   .blurb:last-child { border-bottom: 0; }
-
   .blurb-index { margin-bottom: 20px; }
 
   .footer {
@@ -302,13 +294,9 @@ h1 {
 
 @media (max-width: 430px) {
   h1 { font-size: 2.8rem; }
-
   .brand-name { font-size: 1.02rem; }
-  .brand-ucla { font-size: 1rem; }
-
-  .growth-caption {
-    font-size: 0.66rem;
-  }
+  .ucla-logo { width: 58px; }
+  .growth-caption { font-size: 0.66rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
