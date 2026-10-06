@@ -1,14 +1,15 @@
 * { box-sizing: border-box; }
 
 :root {
-  --bg: #fff;
-  --text: #111;
+  --bg: #ffffff;
+  --text: #111111;
   --muted: #686868;
   --line: #e5e5e5;
-  --panel: #f7f7f7;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -61,8 +62,8 @@ a { color: inherit; }
 
 .nav {
   display: flex;
-  gap: 30px;
   align-items: center;
+  gap: 30px;
   font-size: 0.95rem;
   white-space: nowrap;
 }
@@ -72,7 +73,9 @@ a { color: inherit; }
   transition: opacity 150ms ease;
 }
 
-.nav a:hover { opacity: 0.48; }
+.nav a:hover {
+  opacity: 0.48;
+}
 
 .hero {
   display: grid;
@@ -82,7 +85,9 @@ a { color: inherit; }
   padding: 68px 0 58px;
 }
 
-.hero-copy { max-width: 600px; }
+.hero-copy {
+  max-width: 600px;
+}
 
 .kicker {
   margin: 0 0 20px;
@@ -116,31 +121,24 @@ h1 {
   line-height: 1.65;
 }
 
-.growth-visual { min-width: 0; }
+.growth-visual {
+  min-width: 0;
+}
 
 .canvas-wrap {
   width: 100%;
   aspect-ratio: 1.42 / 1;
   min-height: 330px;
   max-height: 430px;
-  background: var(--panel);
-  border: 1px solid var(--line);
+  background: #ffffff;
+  overflow: hidden;
 }
 
 #growthCanvas {
   display: block;
   width: 100%;
   height: 100%;
-  cursor: crosshair;
-}
-
-.growth-caption {
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  padding-top: 10px;
-  color: var(--muted);
-  font-size: 0.72rem;
+  background: #ffffff;
 }
 
 .blurbs {
@@ -163,7 +161,7 @@ h1 {
 .blurb-index {
   display: block;
   margin-bottom: 32px;
-  color: #999;
+  color: #999999;
   font-size: 0.68rem;
 }
 
@@ -182,47 +180,18 @@ h1 {
   line-height: 1.55;
 }
 
-.footer {
-  min-height: 88px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 28px;
-  color: var(--muted);
-  font-size: 0.74rem;
-  line-height: 1.65;
-}
-
-.footer-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.footer strong {
-  color: var(--text);
-  font-weight: 500;
-}
-
-.footer-links {
-  display: flex;
-  gap: 22px;
-}
-
-.footer-links a {
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-}
-
-.footer-links a:hover { border-bottom-color: currentColor; }
-
 @media (max-width: 1050px) {
   .site-shell {
     width: min(100% - 44px, 1120px);
   }
 
-  .topbar { gap: 20px; }
+  .topbar {
+    gap: 20px;
+  }
 
-  .nav { gap: 18px; }
+  .nav {
+    gap: 18px;
+  }
 
   .hero {
     grid-template-columns: minmax(0, 1fr) minmax(330px, 0.9fr);
@@ -230,9 +199,17 @@ h1 {
     padding: 54px 0 48px;
   }
 
-  h1 { font-size: 3.85rem; }
-  .hero-text { font-size: 1.3rem; }
-  .canvas-wrap { min-height: 300px; }
+  h1 {
+    font-size: 3.85rem;
+  }
+
+  .hero-text {
+    font-size: 1.3rem;
+  }
+
+  .canvas-wrap {
+    min-height: 300px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -257,15 +234,20 @@ h1 {
 
   .hero {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 30px;
     padding: 46px 0 42px;
   }
 
-  h1 { font-size: 3.25rem; }
-  .hero-text { font-size: 1.2rem; }
+  h1 {
+    font-size: 3.25rem;
+  }
+
+  .hero-text {
+    font-size: 1.2rem;
+  }
 
   .canvas-wrap {
-    aspect-ratio: 1.35 / 1;
+    aspect-ratio: 1.4 / 1;
     min-height: 260px;
   }
 
@@ -281,41 +263,35 @@ h1 {
     border-bottom: 1px solid var(--line);
   }
 
-  .blurb:last-child { border-bottom: 0; }
-  .blurb-index { margin-bottom: 20px; }
+  .blurb:last-child {
+    border-bottom: 0;
+  }
 
-  .footer {
-    padding: 24px 0;
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 16px;
+  .blurb-index {
+    margin-bottom: 20px;
   }
 }
 
 @media (max-width: 430px) {
-  h1 { font-size: 2.8rem; }
-  .brand-name { font-size: 1.02rem; }
-  .ucla-logo { width: 58px; }
-  .growth-caption { font-size: 0.66rem; }
+  h1 {
+    font-size: 2.8rem;
+  }
+
+  .brand-name {
+    font-size: 1.02rem;
+  }
+
+  .ucla-logo {
+    width: 58px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .nav a { transition: none; }
-}
-
-@media print {
-  .site-shell {
-    width: 100%;
-    margin: 0;
+  html {
+    scroll-behavior: auto;
   }
 
-  .hero {
-    break-inside: avoid;
-  }
-
-  .canvas-wrap {
-    min-height: 0;
-    height: 310px;
+  .nav a {
+    transition: none;
   }
 }

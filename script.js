@@ -3,154 +3,264 @@
   if (!canvas) return;
 
   const ctx = canvas.getContext("2d");
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReducedMotion =
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   let width = 0;
   let height = 0;
   let dpr = 1;
+
   let atoms = [];
-  let falling = [];
-  let nextAutoDeposit = 0;
+  let incoming = [];
 
-  const atomRadius = 7.5;
-  const horizontalGap = 20;
-  const verticalGap = 17;
+  let activeRow = 0;
+  let filledInActiveRow = 0;
+  let nextLaunch = 0;
+  let shifting = false;
+  let shiftProgress = 0;
 
-  function resize() {
-    const rect = canvas.getBoundingClientRect();
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    width = rect.width;
-    height = rect.height;
+  const atomRadius = 4.1;
+  const colGap = 13.5;
+  const rowGap = 12.0;
 
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  function geometry() {
+    const left = Math.max(18, width * 0.035);
+    const right = Math.max(24, width * 0.07);
+    const bottom = Math.max(24, height * 0.075);
 
-    buildSeedLattice();
-    draw();
+    const usableWidth = width - left - right;
+    const columns = Math.max(16, Math.floor(usableWidth / colGap));
+    const latticeWidth = (columns - 1) * colGap;
+    const startX = left + Math.max(0, (usableWidth - latticeWidth) * 0.35);
+
+    const baseY = height - bottom;
+    const growthY = baseY - 5 * rowGap;
+
+    return { left, right, bottom, columns, startX, baseY, growthY };
   }
 
-  function buildSeedLattice() {
+  function targetFor(rowIndex, colIndex) {
+    const g = geometry();
+
+    const offset = rowIndex % 2 ? colGap * 0.5 : 0;
+
+    return {
+      x: g.startX + colIndex * colGap + offset,
+      y: g.growthY + rowIndex * rowGap
+    };
+  }
+
+  function seedLattice() {
     atoms = [];
-    falling = [];
+    incoming = [];
+    activeRow = 0;
+    filledInActiveRow = 0;
+    shifting = false;
+    shiftProgress = 0;
 
-    const baseY = height - 54;
-    const columns = Math.max(9, Math.floor((width - 64) / horizontalGap));
-    const startX = (width - (columns - 1) * horizontalGap) / 2;
+    const g = geometry();
 
-    for (let row = 0; row < 2; row++) {
-      for (let col = 0; col < columns; col++) {
+    // Start with several completed layers below the growth front.
+    const completedRows = 5;
+
+    for (let row = 1; row <= completedRows; row++) {
+      for (let col = 0; col < g.columns; col++) {
+        const p = targetFor(row, col);
+
         atoms.push({
-          x: startX + col * horizontalGap + (row % 2 ? horizontalGap / 2 : 0),
-          y: baseY - row * verticalGap,
-          tone: row === 0 ? 0 : 1
+          x: p.x,
+          y: p.y,
+          row,
+          col,
+          tone: (row + col) % 5 === 0 ? 1 : 0
         });
       }
     }
   }
 
-  function availableTargets() {
-    const baseY = height - 54;
-    const columns = Math.max(9, Math.floor((width - 64) / horizontalGap));
-    const startX = (width - (columns - 1) * horizontalGap) / 2;
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
 
-    const occupied = new Set(atoms.map(a => `${Math.round(a.x)}:${Math.round(a.y)}`));
-    const pending = new Set(falling.map(a => `${Math.round(a.targetX)}:${Math.round(a.targetY)}`));
-    const targets = [];
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = Math.max(1, rect.width);
+    height = Math.max(1, rect.height);
 
-    for (let row = 2; row < 10; row++) {
-      for (let col = 0; col < columns; col++) {
-        const x = startX + col * horizontalGap + (row % 2 ? horizontalGap / 2 : 0);
-        const y = baseY - row * verticalGap;
-        const key = `${Math.round(x)}:${Math.round(y)}`;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
 
-        if (!occupied.has(key) && !pending.has(key) && y > 34) {
-          targets.push({ x, y, row });
-        }
-      }
-    }
-    return targets;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    seedLattice();
+    draw();
   }
 
-  function deposit(count = 3, aroundX = null) {
-    const targets = availableTargets();
-    if (!targets.length) return;
+  function launchOne() {
+    if (shifting) return;
 
-    let pool = [...targets];
+    const g = geometry();
 
-    if (aroundX !== null) {
-      pool.sort((a, b) => Math.abs(a.x - aroundX) - Math.abs(b.x - aroundX));
-    } else {
-      pool.sort((a, b) => a.row - b.row || Math.random() - 0.5);
+    if (filledInActiveRow >= g.columns) return;
+
+    // Fill from left to right, but incoming atom begins off-screen right/top.
+    const col = filledInActiveRow;
+    const target = targetFor(activeRow, col);
+
+    const startX = width + 10 + Math.random() * 45;
+    const startY = Math.max(
+      16,
+      target.y - 80 - Math.random() * 85
+    );
+
+    incoming.push({
+      x: startX,
+      y: startY,
+      targetX: target.x,
+      targetY: target.y,
+      row: activeRow,
+      col,
+      tone: Math.random() < 0.14 ? 1 : 0,
+      speed: 0.012 + Math.random() * 0.004
+    });
+
+    filledInActiveRow += 1;
+  }
+
+  function finishIncoming(atom) {
+    atoms.push({
+      x: atom.targetX,
+      y: atom.targetY,
+      row: atom.row,
+      col: atom.col,
+      tone: atom.tone
+    });
+
+    const g = geometry();
+
+    const settledInTopRow =
+      atoms.filter((a) => a.row === activeRow).length;
+
+    if (
+      filledInActiveRow >= g.columns &&
+      settledInTopRow >= g.columns &&
+      incoming.length === 0
+    ) {
+      shifting = true;
+      shiftProgress = 0;
+    }
+  }
+
+  function updateShift() {
+    shiftProgress += 0.045;
+
+    const step = rowGap * 0.045;
+
+    for (const atom of atoms) {
+      atom.y += step;
     }
 
-    for (const target of pool.slice(0, Math.min(count, pool.length))) {
-      falling.push({
-        x: target.x + (Math.random() - 0.5) * 14,
-        y: -12 - Math.random() * 70,
-        targetX: target.x,
-        targetY: target.y,
-        vy: 0.3 + Math.random() * 0.25,
-        tone: Math.random() > 0.76 ? 1 : 0
-      });
+    if (shiftProgress >= 1) {
+      // Completed top layer becomes row 1, everything else moves down.
+      for (const atom of atoms) {
+        atom.row += 1;
+      }
+
+      // Drop oldest rows once they are comfortably off the visible stack.
+      atoms = atoms.filter((atom) => atom.row <= 10);
+
+      activeRow = 0;
+      filledInActiveRow = 0;
+      shifting = false;
+      shiftProgress = 0;
+
+      // Snap all rows exactly back to lattice geometry after the animation.
+      for (const atom of atoms) {
+        const p = targetFor(atom.row, atom.col);
+        atom.x = p.x;
+        atom.y = p.y;
+      }
     }
   }
 
   function drawAtom(x, y, tone, alpha = 1) {
     ctx.save();
     ctx.globalAlpha = alpha;
+
     ctx.beginPath();
     ctx.arc(x, y, atomRadius, 0, Math.PI * 2);
-    ctx.fillStyle = tone === 1 ? "#888" : "#171717";
+
+    ctx.fillStyle = tone === 1 ? "#8a8a8a" : "#161616";
     ctx.fill();
+
     ctx.restore();
   }
 
   function draw() {
     ctx.clearRect(0, 0, width, height);
 
-    const substrateY = height - 32;
-    ctx.beginPath();
-    ctx.moveTo(24, substrateY);
-    ctx.lineTo(width - 24, substrateY);
-    ctx.strokeStyle = "#cfcfcf";
-    ctx.lineWidth = 1;
-    ctx.stroke();
+    // Pure white background; no borders, labels, axes, or substrate text.
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, height);
 
-    ctx.font = '10px Inter, Arial, sans-serif';
-    ctx.fillStyle = "#888";
-    ctx.textAlign = "left";
-    ctx.fillText("substrate", 24, substrateY + 18);
+    for (const atom of atoms) {
+      if (atom.y > -10 && atom.y < height + 10) {
+        drawAtom(atom.x, atom.y, atom.tone, 0.96);
+      }
+    }
 
-    for (const atom of atoms) drawAtom(atom.x, atom.y, atom.tone, 0.96);
-    for (const atom of falling) drawAtom(atom.x, atom.y, atom.tone, 0.88);
-
-    ctx.textAlign = "right";
-    ctx.fillText("click to grow", width - 22, 22);
-    ctx.textAlign = "left";
+    for (const atom of incoming) {
+      drawAtom(atom.x, atom.y, atom.tone, 0.86);
+    }
   }
 
   function step(time) {
-    if (!reducedMotion) {
-      const next = [];
+    if (!prefersReducedMotion) {
+      if (!shifting) {
+        const g = geometry();
 
-      for (const atom of falling) {
-        atom.vy += 0.028;
-        atom.y += atom.vy;
-        atom.x += (atom.targetX - atom.x) * 0.04;
-
-        if (atom.y >= atom.targetY) {
-          atoms.push({ x: atom.targetX, y: atom.targetY, tone: atom.tone });
-        } else {
-          next.push(atom);
+        // Only keep a few atoms in flight at once.
+        if (
+          time >= nextLaunch &&
+          incoming.length < 3 &&
+          filledInActiveRow < g.columns
+        ) {
+          launchOne();
+          nextLaunch = time + 330 + Math.random() * 480;
         }
-      }
 
-      falling = next;
+        const stillIncoming = [];
 
-      if (time > nextAutoDeposit && falling.length < 5) {
-        deposit(1);
-        nextAutoDeposit = time + 2600 + Math.random() * 1800;
+        for (const atom of incoming) {
+          const dx = atom.targetX - atom.x;
+          const dy = atom.targetY - atom.y;
+
+          atom.x += dx * atom.speed * 2.2;
+          atom.y += dy * atom.speed * 2.2;
+
+          const dist = Math.hypot(dx, dy);
+
+          if (dist < 2.0) {
+            finishIncoming(atom);
+          } else {
+            stillIncoming.push(atom);
+          }
+        }
+
+        incoming = stillIncoming;
+
+        // A layer may have completed on this exact frame.
+        const settled =
+          atoms.filter((a) => a.row === activeRow).length;
+
+        if (
+          filledInActiveRow >= g.columns &&
+          settled >= g.columns &&
+          incoming.length === 0
+        ) {
+          shifting = true;
+          shiftProgress = 0;
+        }
+      } else {
+        updateShift();
       }
     }
 
@@ -158,25 +268,18 @@
     requestAnimationFrame(step);
   }
 
-  canvas.addEventListener("click", event => {
-    const rect = canvas.getBoundingClientRect();
-    deposit(4, event.clientX - rect.left);
-  });
+  window.addEventListener("resize", (() => {
+    let timer;
 
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(resize, 120);
-  });
+    return () => {
+      clearTimeout(timer);
+      timer = setTimeout(resize, 140);
+    };
+  })());
 
   resize();
 
-  if (reducedMotion) {
-    deposit(7);
-    for (const atom of falling) {
-      atoms.push({ x: atom.targetX, y: atom.targetY, tone: atom.tone });
-    }
-    falling = [];
+  if (prefersReducedMotion) {
     draw();
   } else {
     requestAnimationFrame(step);
