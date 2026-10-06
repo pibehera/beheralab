@@ -12,9 +12,9 @@
   let falling = [];
   let nextAutoDeposit = 0;
 
-  const atomRadius = 8;
-  const horizontalGap = 21;
-  const verticalGap = 18;
+  const atomRadius = 7.5;
+  const horizontalGap = 20;
+  const verticalGap = 17;
 
   function resize() {
     const rect = canvas.getBoundingClientRect();
@@ -32,8 +32,10 @@
 
   function buildSeedLattice() {
     atoms = [];
-    const baseY = height - 62;
-    const columns = Math.max(10, Math.floor((width - 70) / horizontalGap));
+    falling = [];
+
+    const baseY = height - 54;
+    const columns = Math.max(9, Math.floor((width - 64) / horizontalGap));
     const startX = (width - (columns - 1) * horizontalGap) / 2;
 
     for (let row = 0; row < 2; row++) {
@@ -48,56 +50,48 @@
   }
 
   function availableTargets() {
-    const baseY = height - 62;
-    const columns = Math.max(10, Math.floor((width - 70) / horizontalGap));
+    const baseY = height - 54;
+    const columns = Math.max(9, Math.floor((width - 64) / horizontalGap));
     const startX = (width - (columns - 1) * horizontalGap) / 2;
 
-    const occupied = new Set(
-      atoms.map((a) => `${Math.round(a.x)}:${Math.round(a.y)}`)
-    );
-
+    const occupied = new Set(atoms.map(a => `${Math.round(a.x)}:${Math.round(a.y)}`));
+    const pending = new Set(falling.map(a => `${Math.round(a.targetX)}:${Math.round(a.targetY)}`));
     const targets = [];
 
-    for (let row = 2; row < 11; row++) {
+    for (let row = 2; row < 10; row++) {
       for (let col = 0; col < columns; col++) {
         const x = startX + col * horizontalGap + (row % 2 ? horizontalGap / 2 : 0);
         const y = baseY - row * verticalGap;
         const key = `${Math.round(x)}:${Math.round(y)}`;
 
-        if (!occupied.has(key) && y > 42) {
+        if (!occupied.has(key) && !pending.has(key) && y > 34) {
           targets.push({ x, y, row });
         }
       }
     }
-
     return targets;
   }
 
-  function deposit(count = 4, aroundX = null) {
+  function deposit(count = 3, aroundX = null) {
     const targets = availableTargets();
     if (!targets.length) return;
 
-    let pool;
+    let pool = [...targets];
+
     if (aroundX !== null) {
-      pool = [...targets].sort(
-        (a, b) => Math.abs(a.x - aroundX) - Math.abs(b.x - aroundX)
-      );
+      pool.sort((a, b) => Math.abs(a.x - aroundX) - Math.abs(b.x - aroundX));
     } else {
-      pool = [...targets].sort(
-        (a, b) => a.row - b.row || Math.random() - 0.5
-      );
+      pool.sort((a, b) => a.row - b.row || Math.random() - 0.5);
     }
 
-    const chosen = pool.slice(0, Math.min(count, pool.length));
-
-    for (const target of chosen) {
+    for (const target of pool.slice(0, Math.min(count, pool.length))) {
       falling.push({
-        x: target.x + (Math.random() - 0.5) * 18,
-        y: -15 - Math.random() * 120,
+        x: target.x + (Math.random() - 0.5) * 14,
+        y: -12 - Math.random() * 70,
         targetX: target.x,
         targetY: target.y,
-        vy: 0.35 + Math.random() * 0.4,
-        tone: Math.random() > 0.75 ? 1 : 0
+        vy: 0.3 + Math.random() * 0.25,
+        tone: Math.random() > 0.76 ? 1 : 0
       });
     }
   }
@@ -107,60 +101,56 @@
     ctx.globalAlpha = alpha;
     ctx.beginPath();
     ctx.arc(x, y, atomRadius, 0, Math.PI * 2);
-    ctx.fillStyle = tone === 1 ? "#8a8a8a" : "#171717";
+    ctx.fillStyle = tone === 1 ? "#888" : "#171717";
     ctx.fill();
     ctx.restore();
   }
 
-  function drawSubstrate() {
-    const y = height - 38;
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    const substrateY = height - 32;
     ctx.beginPath();
-    ctx.moveTo(30, y);
-    ctx.lineTo(width - 30, y);
+    ctx.moveTo(24, substrateY);
+    ctx.lineTo(width - 24, substrateY);
     ctx.strokeStyle = "#cfcfcf";
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    ctx.fillStyle = "#8a8a8a";
-    ctx.font = '11px Inter, Arial, sans-serif';
-    ctx.fillText("substrate", 30, y + 22);
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, width, height);
-    drawSubstrate();
+    ctx.font = '10px Inter, Arial, sans-serif';
+    ctx.fillStyle = "#888";
+    ctx.textAlign = "left";
+    ctx.fillText("substrate", 24, substrateY + 18);
 
     for (const atom of atoms) drawAtom(atom.x, atom.y, atom.tone, 0.96);
     for (const atom of falling) drawAtom(atom.x, atom.y, atom.tone, 0.88);
 
-    ctx.fillStyle = "#8a8a8a";
-    ctx.font = '11px Inter, Arial, sans-serif';
     ctx.textAlign = "right";
-    ctx.fillText("click to grow", width - 28, 26);
+    ctx.fillText("click to grow", width - 22, 22);
     ctx.textAlign = "left";
   }
 
   function step(time) {
     if (!reducedMotion) {
-      const stillFalling = [];
+      const next = [];
 
       for (const atom of falling) {
-        atom.vy += 0.035;
+        atom.vy += 0.028;
         atom.y += atom.vy;
-        atom.x += (atom.targetX - atom.x) * 0.035;
+        atom.x += (atom.targetX - atom.x) * 0.04;
 
         if (atom.y >= atom.targetY) {
           atoms.push({ x: atom.targetX, y: atom.targetY, tone: atom.tone });
         } else {
-          stillFalling.push(atom);
+          next.push(atom);
         }
       }
 
-      falling = stillFalling;
+      falling = next;
 
-      if (time > nextAutoDeposit && falling.length < 7) {
-        deposit(1 + Math.floor(Math.random() * 2));
-        nextAutoDeposit = time + 2100 + Math.random() * 1600;
+      if (time > nextAutoDeposit && falling.length < 5) {
+        deposit(1);
+        nextAutoDeposit = time + 2600 + Math.random() * 1800;
       }
     }
 
@@ -168,17 +158,21 @@
     requestAnimationFrame(step);
   }
 
-  canvas.addEventListener("click", (event) => {
+  canvas.addEventListener("click", event => {
     const rect = canvas.getBoundingClientRect();
-    deposit(5, event.clientX - rect.left);
+    deposit(4, event.clientX - rect.left);
   });
 
-  window.addEventListener("resize", resize, { passive: true });
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 120);
+  });
 
   resize();
 
   if (reducedMotion) {
-    deposit(8);
+    deposit(7);
     for (const atom of falling) {
       atoms.push({ x: atom.targetX, y: atom.targetY, tone: atom.tone });
     }

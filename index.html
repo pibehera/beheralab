@@ -18,6 +18,7 @@
         <span class="brand-divider">|</span>
         <span class="brand-ucla">UCLA</span>
       </a>
+
       <nav class="nav" aria-label="Primary navigation">
         <a href="#research">Research</a>
         <a href="#people">People</a>
@@ -28,16 +29,24 @@
     </header>
 
     <main>
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero">
         <div class="hero-copy">
           <p class="kicker">BEHERA RESEARCH GROUP</p>
-          <h1 id="hero-title">Atoms to Bits Lab</h1>
-          <p class="hero-text">We design and synthesize atomic-scale materials and heterostructures for next-generation electronic technologies.</p>
-          <p class="hero-subtext">Our work spans thin-film synthesis, ferroic and dielectric materials, emerging interconnects, and quantum and cryogenic electronics.</p>
+          <h1>Atoms to Bits Lab</h1>
+          <p class="hero-text">
+            We design and synthesize atomic-scale materials and heterostructures
+            for next-generation electronic technologies.
+          </p>
+          <p class="hero-subtext">
+            Our work spans thin-film synthesis, ferroic and dielectric materials,
+            emerging interconnects, and quantum and cryogenic electronics.
+          </p>
         </div>
 
         <div class="growth-visual">
-          <canvas id="growthCanvas" aria-label="Interactive atomic layer deposition animation"></canvas>
+          <div class="canvas-wrap">
+            <canvas id="growthCanvas" aria-label="Interactive atomic layer deposition animation"></canvas>
+          </div>
           <div class="growth-caption">
             <span>Atomic-scale growth</span>
             <span>Click to deposit atoms</span>
@@ -45,8 +54,8 @@
         </div>
       </section>
 
-      <section class="blurbs" aria-label="Lab overview">
-        <article class="blurb" id="research">
+      <section class="blurbs" id="research">
+        <article class="blurb">
           <span class="blurb-index">01</span>
           <h2>Atomic-Scale Growth</h2>
           <p>Atomic layer deposition and synthesis of electronic materials and heterostructures.</p>
@@ -72,11 +81,12 @@
         <span>Department of Materials Science and Engineering · UCLA</span>
       </div>
       <div class="footer-links">
-        <a href="#" aria-label="LinkedIn">LinkedIn</a>
-        <a href="#" aria-label="Google Scholar">Google Scholar</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Google Scholar</a>
       </div>
     </footer>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
