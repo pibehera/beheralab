@@ -4,87 +4,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Atoms to Bits Lab | UCLA</title>
-  <meta name="description" content="Atoms to Bits Lab at UCLA — atomic-scale materials and heterostructures for next-generation electronic technologies.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="The Behera Research Group at UCLA designs and synthesizes atomic-scale materials and heterostructures for next-generation electronic technologies.">
+  <meta property="og:title" content="Atoms to Bits Lab | UCLA">
+  <meta property="og:description" content="Atomic-scale materials and heterostructures for next-generation electronic technologies.">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="Atoms to Bits Lab | UCLA">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/style.css"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="site-shell">
-
     <header class="topbar">
-      <a class="brand" href="/" aria-label="Atoms to Bits Lab home">
-        <span class="brand-name">Atoms to Bits Lab</span>
-        <span class="brand-divider">|</span>
-        <img class="ucla-logo" src="logo_UCLA_black.svg" alt="UCLA">
-      </a>
-
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="#research">Research</a>
-        <a href="#people">People</a>
-        <a href="#publications">Publications</a>
-        <a href="#news">News</a>
-        <a href="#join">Join Us</a>
-      </nav>
+      <a class="brand" href="index.html" aria-label="Atoms to Bits Lab home"><span class="brand-name">Atoms to Bits Lab</span><span class="brand-divider" aria-hidden="true">|</span><img class="ucla-logo" src="assets/logo_UCLA_black.svg" alt="UCLA" width="63" height="21"></a>
+      <nav class="nav" aria-label="Primary navigation"><a href="research.html">Research</a><a href="people.html">People</a><a href="publications.html">Publications</a><a href="news.html">News</a><a href="join.html">Join Us</a></nav>
     </header>
-
-    <main>
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="kicker">BEHERA RESEARCH GROUP</p>
-          <h1>Atoms to Bits Lab</h1>
-
-          <p class="hero-text">
-            We design and synthesize atomic-scale materials and heterostructures
-            for next-generation electronic technologies.
-          </p>
-
-          <p class="hero-subtext">
-            Our work spans thin-film synthesis, ferroic and dielectric materials,
-            emerging interconnects, and quantum and cryogenic electronics.
-          </p>
-        </div>
-
-        <div class="growth-visual" aria-label="Animated atomic layer growth">
-          <div class="canvas-wrap">
-            <canvas id="growthCanvas"></canvas>
-          </div>
-        </div>
+    <main id="main-content">
+      <section class="hero" aria-labelledby="home-heading">
+        <div class="hero-copy"><p class="eyebrow">Behera Research Group</p><h1 id="home-heading">Atoms to Bits Lab</h1><p class="hero-lead">We design and synthesize atomic-scale materials and heterostructures for next-generation electronic technologies.</p><p class="hero-support">Our work spans thin-film synthesis, ferroic and dielectric materials, emerging interconnects, and quantum and cryogenic electronics.</p></div>
+        <figure class="hero-visual"><img src="assets/lattice.svg" alt="" width="720" height="520"></figure>
       </section>
-
-      <section class="blurbs" id="research" aria-label="Lab overview">
-        <article class="blurb">
-          <span class="blurb-index">01</span>
-          <h2>Atomic-Scale Growth</h2>
-          <p>
-            Atomic layer deposition and synthesis of electronic materials
-            and heterostructures.
-          </p>
-        </article>
-
-        <article class="blurb">
-          <span class="blurb-index">02</span>
-          <h2>Emerging Electronic Materials</h2>
-          <p>
-            Ferroelectrics, dielectrics, interconnects, and materials for
-            quantum and cryogenic systems.
-          </p>
-        </article>
-
-        <article class="blurb" id="join">
-          <span class="blurb-index">03</span>
-          <h2>Join the Lab</h2>
-          <p>
-            We are recruiting graduate students and postdoctoral researchers
-            at UCLA.
-          </p>
-        </article>
+      <section class="home-links" aria-label="Explore the lab">
+        <a class="home-link" href="research.html"><span class="home-link-index" aria-hidden="true">01</span><h2>Atomic-Scale Growth</h2><p>Atomic layer deposition and synthesis of electronic materials and heterostructures.</p></a>
+        <a class="home-link" href="research.html"><span class="home-link-index" aria-hidden="true">02</span><h2>Emerging Electronic Materials</h2><p>Ferroelectrics, dielectrics, interconnects, and materials for quantum and cryogenic systems.</p></a>
+        <a class="home-link" href="join.html"><span class="home-link-index" aria-hidden="true">03</span><h2>Join the Lab</h2><p>We are recruiting graduate students and postdoctoral researchers at UCLA.</p></a>
       </section>
     </main>
-
+    <footer class="site-footer"><p>© 2026 Atoms to Bits Lab</p><p>Materials Science and Engineering, UCLA</p></footer>
   </div>
-
-  <script src="script.js"></script>
 </body>
 </html>

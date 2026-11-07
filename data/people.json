@@ -1,0 +1,84 @@
+{
+  "principal_investigator": {
+    "name": "Piush Behera",
+    "role": "Assistant Professor",
+    "affiliation": "Materials Science and Engineering, UCLA",
+    "education": [
+      "Ph.D., University of California, Berkeley",
+      "B.S., University of Illinois Urbana-Champaign"
+    ],
+    "links": [
+      {
+        "label": "Google Scholar",
+        "url": "https://scholar.google.com/citations?user=DFvG3aQAAAAJ&hl=en&oi=ao"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/piush-behera-444147127/"
+      }
+    ]
+  },
+  "groups": [
+    {
+      "id": "postdoctoral-researchers",
+      "heading": "Postdoctoral Researchers",
+      "people": [
+        {
+          "name": "Postdoctoral Researcher — Placeholder",
+          "role": "Postdoctoral Researcher",
+          "education": ["Ph.D., University", "B.S., University"]
+        }
+      ]
+    },
+    {
+      "id": "graduate-student-researchers",
+      "heading": "Graduate Student Researchers",
+      "people": [
+        {
+          "name": "Graduate Researcher — Placeholder 1",
+          "role": "Graduate Student Researcher",
+          "education": ["B.S., University"]
+        },
+        {
+          "name": "Graduate Researcher — Placeholder 2",
+          "role": "Graduate Student Researcher",
+          "education": ["B.S., University"]
+        },
+        {
+          "name": "Graduate Researcher — Placeholder 3",
+          "role": "Graduate Student Researcher",
+          "education": ["B.S., University"]
+        }
+      ]
+    },
+    {
+      "id": "undergraduate-researchers",
+      "heading": "Undergraduate Researchers",
+      "people": [
+        {
+          "name": "Undergraduate Researcher — Placeholder 1",
+          "role": "Undergraduate Researcher",
+          "education": ["B.S. candidate, UCLA"]
+        },
+        {
+          "name": "Undergraduate Researcher — Placeholder 2",
+          "role": "Undergraduate Researcher",
+          "education": ["B.S. candidate, UCLA"]
+        },
+        {
+          "name": "Undergraduate Researcher — Placeholder 3",
+          "role": "Undergraduate Researcher",
+          "education": ["B.S. candidate, UCLA"]
+        }
+      ]
+    }
+  ],
+  "alumni": [
+    {
+      "name": "Alumnus — Placeholder",
+      "degree": "Degree — Placeholder",
+      "year": "Year",
+      "placement": "Placement — Placeholder"
+    }
+  ]
+}
