@@ -16,6 +16,7 @@ Static website for the Behera Research Group in UCLA Materials Science and Engin
 | `assets/site.js` | Renders the People, Publications, and News JSON data |
 | `assets/lattice.svg` | Original decorative homepage lattice artwork |
 | `assets/logo_UCLA_black.svg` | UCLA wordmark used in the navigation |
+| `assets/favicon.svg` | Small lattice mark used in browser tabs |
 | `data/people.json` | Editable people and alumni data |
 | `data/publications.json` | Editable publication data |
 | `data/news.json` | Editable news data |
