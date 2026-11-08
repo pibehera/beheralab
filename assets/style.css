@@ -201,12 +201,13 @@ h1 {
 
 .hero-visual {
   min-width: 0;
+  display: grid;
+  place-items: center;
 }
 
 .hero-visual img {
-  width: 100%;
+  width: min(100%, 23.25rem);
   height: auto;
-  max-height: 27rem;
   object-fit: contain;
 }
 
@@ -754,8 +755,12 @@ tbody tr:last-child td {
   }
 
   .hero-visual {
-    width: min(100%, 34rem);
+    width: min(100%, 28rem);
     justify-self: center;
+  }
+
+  .hero-visual img {
+    width: min(100%, 15.25rem);
   }
 
   .page-header {
