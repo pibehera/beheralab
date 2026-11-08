@@ -64,16 +64,9 @@
 
       const piLayout = document.createElement("div");
       piLayout.className = "pi-layout";
-      const portrait = document.createElement("div");
-      portrait.className = "portrait-placeholder";
-      portrait.setAttribute("role", "img");
-      portrait.setAttribute("aria-label", "Headshot placeholder for Piush Behera");
-      const portraitLabel = document.createElement("span");
-      portraitLabel.className = "portrait-label";
-      portraitLabel.textContent = "Headshot forthcoming";
-      portrait.append(portraitLabel);
 
       const details = document.createElement("div");
+      details.className = "person-details";
       const name = document.createElement("h3");
       name.className = "person-name";
       name.textContent = pi.name;
@@ -87,7 +80,26 @@
       links.className = "person-links";
       pi.links.forEach((item) => links.append(externalLink(item.url, item.label)));
       details.append(name, role, affiliation, educationList(pi.education), links);
-      piLayout.append(portrait, details);
+
+      if (pi.image) {
+        const imageFrame = document.createElement("figure");
+        imageFrame.className = "person-image-frame";
+        const portrait = document.createElement("img");
+        portrait.className = "portrait-image";
+        portrait.src = pi.image;
+        portrait.alt = pi.name;
+        portrait.width = 800;
+        portrait.height = 1000;
+        portrait.addEventListener("error", () => {
+          imageFrame.remove();
+          piLayout.classList.add("no-image");
+        });
+        imageFrame.append(portrait);
+        piLayout.append(imageFrame);
+      } else {
+        piLayout.classList.add("no-image");
+      }
+      piLayout.append(details);
       piSection.append(piHeading, piLayout);
       root.append(piSection);
 
@@ -105,6 +117,14 @@
         group.people.forEach((person) => {
           const card = document.createElement("article");
           card.className = "person-card";
+          if (person.image) {
+            const image = document.createElement("img");
+            image.className = "person-card-image";
+            image.src = person.image;
+            image.alt = person.name;
+            image.loading = "lazy";
+            card.append(image);
+          }
           const personName = document.createElement("h3");
           personName.className = "person-name";
           personName.textContent = person.name;
@@ -159,8 +179,8 @@
     try {
       const records = await loadJson("data/publications.json");
       const publications = records
-        .filter((item) => item.hidden !== true)
-        .sort((a, b) => Number(b.year || 0) - Number(a.year || 0) || a.title.localeCompare(b.title));
+        .filter((item) => item.hidden !== true && Number(item.year) > 0)
+        .sort((a, b) => Number(b.year) - Number(a.year) || a.title.localeCompare(b.title));
       root.replaceChildren();
 
       if (!publications.length) {
@@ -170,18 +190,27 @@
 
       const byYear = new Map();
       publications.forEach((publication) => {
-        const year = String(publication.year || "Other");
+        const year = String(publication.year);
         if (!byYear.has(year)) byYear.set(year, []);
         byYear.get(year).push(publication);
       });
 
+      const currentYear = String(new Date().getFullYear());
+      const defaultOpenYear = byYear.has(currentYear) ? currentYear : byYear.keys().next().value;
+
       byYear.forEach((items, year) => {
-        const section = document.createElement("section");
+        const section = document.createElement("details");
         section.className = "year-group";
-        section.setAttribute("aria-labelledby", `year-${year}`);
-        const heading = document.createElement("h2");
-        heading.id = `year-${year}`;
-        heading.textContent = year;
+        section.open = year === defaultOpenYear;
+        const summary = document.createElement("summary");
+        summary.className = "year-summary";
+        const label = document.createElement("span");
+        label.className = "year-label";
+        label.textContent = year;
+        const count = document.createElement("span");
+        count.className = "year-count";
+        count.textContent = `${items.length} ${items.length === 1 ? "publication" : "publications"}`;
+        summary.append(label, count);
         const list = document.createElement("ol");
         list.className = "publication-list";
 
@@ -205,7 +234,7 @@
           list.append(item);
         });
 
-        section.append(heading, list);
+        section.append(summary, list);
         root.append(section);
       });
     } catch (error) {

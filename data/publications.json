@@ -51,7 +51,8 @@
     "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DFvG3aQAAAAJ&pagesize=100&sortby=pubdate&citation_for_view=DFvG3aQAAAAJ:QIV2ME_5wuYC",
     "id": "scholar:DFvG3aQAAAAJ:QIV2ME_5wuYC",
     "authors": "Z Tian, M Zhu, J Kim, P Behera, M Xu, TJ Lee, CC Lin, S Pamula, A Raja, ...",
-    "hidden": false
+    "hidden": true,
+    "hidden_reason": "duplicate/cover entry"
   },
   {
     "year": 2025,
@@ -186,7 +187,8 @@
     "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DFvG3aQAAAAJ&pagesize=100&sortby=pubdate&citation_for_view=DFvG3aQAAAAJ:_kc_bZDykSQC",
     "id": "scholar:DFvG3aQAAAAJ:_kc_bZDykSQC",
     "authors": "P Behera",
-    "hidden": false
+    "hidden": true,
+    "hidden_reason": "thesis"
   },
   {
     "year": 2023,
@@ -195,7 +197,8 @@
     "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DFvG3aQAAAAJ&pagesize=100&sortby=pubdate&citation_for_view=DFvG3aQAAAAJ:2osOgNQ5qMEC",
     "id": "scholar:DFvG3aQAAAAJ:2osOgNQ5qMEC",
     "authors": "P Meisenheimer, HG Lee, Z Wang, YT Shao, P Behera, V Srikrishna, ...",
-    "hidden": false
+    "hidden": true,
+    "hidden_reason": "conference abstract"
   },
   {
     "year": 2023,
@@ -249,7 +252,8 @@
     "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DFvG3aQAAAAJ&pagesize=100&sortby=pubdate&citation_for_view=DFvG3aQAAAAJ:W7OEmFMy1HYC",
     "id": "scholar:DFvG3aQAAAAJ:W7OEmFMy1HYC",
     "authors": "J Yu, L Caratta, P Behera, D Lee, R Ramesh, K Lai",
-    "hidden": false
+    "hidden": true,
+    "hidden_reason": "conference abstract"
   },
   {
     "year": 2022,
@@ -276,7 +280,8 @@
     "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DFvG3aQAAAAJ&pagesize=100&sortby=pubdate&citation_for_view=DFvG3aQAAAAJ:Tyk-4Ss8FVUC",
     "id": "scholar:DFvG3aQAAAAJ:Tyk-4Ss8FVUC",
     "authors": "P Behera, S Das, L Caretta, E Parsonnet, R Ramesh",
-    "hidden": false
+    "hidden": true,
+    "hidden_reason": "conference abstract"
   },
   {
     "year": 2022,
@@ -348,7 +353,8 @@
     "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DFvG3aQAAAAJ&pagesize=100&sortby=pubdate&citation_for_view=DFvG3aQAAAAJ:WF5omc3nYNoC",
     "id": "scholar:DFvG3aQAAAAJ:WF5omc3nYNoC",
     "authors": "R Brinn, P Behera, P Meisenheimer, M Dandu, A Raja, R Ramesh",
-    "hidden": false
+    "hidden": true,
+    "hidden_reason": "missing year"
   },
   {
     "year": 0,
@@ -357,6 +363,7 @@
     "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DFvG3aQAAAAJ&pagesize=100&sortby=pubdate&citation_for_view=DFvG3aQAAAAJ:YOwf2qJgpHMC",
     "id": "scholar:DFvG3aQAAAAJ:YOwf2qJgpHMC",
     "authors": "P Meisenheimer, A Ghosal, E Hoglund, Z Wang, P Behera, F Gómez-Ortiz, ...",
-    "hidden": false
+    "hidden": true,
+    "hidden_reason": "supporting information"
   }
 ]
