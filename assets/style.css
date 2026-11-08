@@ -201,12 +201,13 @@ h1 {
 
 .hero-visual {
   min-width: 0;
+  display: grid;
+  place-items: center;
 }
 
 .hero-visual img {
-  width: 100%;
+  width: min(100%, 23.25rem);
   height: auto;
-  max-height: 27rem;
   object-fit: contain;
 }
 
@@ -412,6 +413,27 @@ h1 {
 
 .education-list li + li {
   margin-top: 0.15rem;
+}
+
+.pi-meta {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 0.45rem 1rem;
+  margin: 1.4rem 0 0;
+  font-size: 0.9rem;
+}
+
+.pi-meta dt {
+  font-weight: 500;
+}
+
+.pi-meta dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+.pi-meta a {
+  color: var(--blue);
 }
 
 .person-links {
@@ -754,8 +776,12 @@ tbody tr:last-child td {
   }
 
   .hero-visual {
-    width: min(100%, 34rem);
+    width: min(100%, 28rem);
     justify-self: center;
+  }
+
+  .hero-visual img {
+    width: min(100%, 15.25rem);
   }
 
   .page-header {
@@ -812,6 +838,15 @@ tbody tr:last-child td {
 
   .hero-lead {
     font-size: 1.15rem;
+  }
+
+  .pi-meta {
+    grid-template-columns: 1fr;
+    gap: 0.12rem;
+  }
+
+  .pi-meta dd + dt {
+    margin-top: 0.45rem;
   }
 
   .home-links,
