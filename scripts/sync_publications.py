@@ -2,8 +2,8 @@
 """Refresh data/publications.json from a public Google Scholar profile.
 
 The parser uses only Python's standard library. It writes atomically, preserves
-local fields (especially ``hidden``), and refuses to replace the current file
-with an empty or suspiciously short result.
+all local/editorial fields (including ``hidden`` and ``hidden_reason``), and
+refuses to replace the current file with an empty or suspiciously short result.
 """
 
 from __future__ import annotations
@@ -43,6 +43,11 @@ def normalized_title(title: str) -> str:
 def fallback_id(title: str) -> str:
     digest = hashlib.sha256(normalized_title(title).encode("utf-8")).hexdigest()[:16]
     return f"title:{digest}"
+
+
+def is_aps_meeting_abstract(record: dict[str, Any]) -> bool:
+    """Return true only for obvious APS March Meeting abstract venues."""
+    return "aps march meeting abstracts" in str(record.get("venue", "")).casefold()
 
 
 def scholar_id_from_url(url: str) -> str | None:
@@ -209,9 +214,15 @@ def merge_records(remote: list[dict[str, Any]], existing: list[dict[str, Any]]) 
 
     for fresh in deduplicate(remote):
         prior = by_id.get(str(fresh["id"])) or by_title.get(normalized_title(str(fresh["title"])))
+        # Start with the local record so every non-Scholar editorial key survives.
         combined = dict(prior or {})
         combined.update({field: fresh.get(field) for field in MANAGED_FIELDS})
-        combined["hidden"] = bool((prior or {}).get("hidden", False))
+        if prior:
+            combined["hidden"] = bool(prior.get("hidden", False))
+        else:
+            combined["hidden"] = is_aps_meeting_abstract(fresh)
+            if combined["hidden"]:
+                combined["hidden_reason"] = "conference abstract"
         merged.append(combined)
         if prior:
             matched_existing.add(str(prior.get("id", "")))
