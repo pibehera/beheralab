@@ -117,7 +117,19 @@ def main() -> int:
     people = json.loads((ROOT / "data" / "people.json").read_text(encoding="utf-8"))
     if len(people.get("groups", [])) != 3 or len(people.get("alumni", [])) < 1:
         errors.append("People data is missing required groups or alumni")
-    people_records = [people.get("principal_investigator", {})]
+    principal_investigator = people.get("principal_investigator", {})
+    required_pi_details = {
+        "previous_appointment": (
+            "Postdoctoral Associate — Research Laboratory of Electronics, "
+            "Massachusetts Institute of Technology — 2026"
+        ),
+        "email": "pbehera@seas.ucla.edu",
+        "office": "Engineering V — 2121E",
+    }
+    for key, value in required_pi_details.items():
+        if principal_investigator.get(key) != value:
+            errors.append(f"PI profile is missing the required {key.replace('_', ' ')}")
+    people_records = [principal_investigator]
     people_records.extend(person for group in people.get("groups", []) for person in group.get("people", []))
     for person in people_records:
         image = person.get("image")

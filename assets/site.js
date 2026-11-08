@@ -79,7 +79,27 @@
       const links = document.createElement("div");
       links.className = "person-links";
       pi.links.forEach((item) => links.append(externalLink(item.url, item.label)));
-      details.append(name, role, affiliation, educationList(pi.education), links);
+      const profileMeta = document.createElement("dl");
+      profileMeta.className = "pi-meta";
+      const appendProfileMeta = (label, value, href) => {
+        if (!value) return;
+        const term = document.createElement("dt");
+        term.textContent = label;
+        const description = document.createElement("dd");
+        if (href) {
+          const link = document.createElement("a");
+          link.href = href;
+          link.textContent = value;
+          description.append(link);
+        } else {
+          description.textContent = value;
+        }
+        profileMeta.append(term, description);
+      };
+      appendProfileMeta("Previous appointment", pi.previous_appointment);
+      appendProfileMeta("Email", pi.email, `mailto:${pi.email}`);
+      appendProfileMeta("Office", pi.office);
+      details.append(name, role, affiliation, educationList(pi.education), profileMeta, links);
 
       if (pi.image) {
         const imageFrame = document.createElement("figure");

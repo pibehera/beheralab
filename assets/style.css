@@ -415,6 +415,27 @@ h1 {
   margin-top: 0.15rem;
 }
 
+.pi-meta {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 0.45rem 1rem;
+  margin: 1.4rem 0 0;
+  font-size: 0.9rem;
+}
+
+.pi-meta dt {
+  font-weight: 500;
+}
+
+.pi-meta dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+.pi-meta a {
+  color: var(--blue);
+}
+
 .person-links {
   display: flex;
   flex-wrap: wrap;
@@ -817,6 +838,15 @@ tbody tr:last-child td {
 
   .hero-lead {
     font-size: 1.15rem;
+  }
+
+  .pi-meta {
+    grid-template-columns: 1fr;
+    gap: 0.12rem;
+  }
+
+  .pi-meta dd + dt {
+    margin-top: 0.45rem;
   }
 
   .home-links,
