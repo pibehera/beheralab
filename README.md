@@ -45,7 +45,7 @@ Place the optimized image in `assets/`, then add an `image` field to that person
 "image": "assets/name.webp"
 ```
 
-Images are optional. A person without an image renders cleanly without a fake portrait. The PI headshot should use `assets/piush-behera.webp` once the supplied source image is available.
+Images are optional. A person without an image renders cleanly without a fake portrait. The PI headshot is stored at `assets/piush-behera.webp`.
 
 ### Hide or unhide a publication
 
