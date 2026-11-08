@@ -7,7 +7,7 @@ Static website for the Behera Research Group in UCLA Materials Science and Engin
 | File | Purpose |
 | --- | --- |
 | `index.html` | Home page |
-| `research.html` | Research directions and future figure slots |
+| `research.html` | Research directions in a compact editorial grid |
 | `people.html` | Principal investigator, group members, and alumni |
 | `publications.html` | Publications grouped by year |
 | `news.html` | Lab announcements |
@@ -25,7 +25,7 @@ Static website for the Behera Research Group in UCLA Materials Science and Engin
 
 ### Research text and figures
 
-Edit the four research-direction blocks in `research.html`. Each block ends with a clearly marked `<figure class="research-placeholder">`. To add a figure later, place the image in `assets/` and replace that placeholder with an `<img>` that has meaningful alt text.
+Edit the four research-direction blocks in `research.html`. To add a figure later, place the image in `assets/` and add an `<img>` inside the relevant `.research-direction` with meaningful alt text.
 
 ### Add or remove a person
 
@@ -37,11 +37,28 @@ Open `data/people.json` and find the appropriate group in `groups`.
 
 Keep the file valid JSON: use double quotes, do not add comments, and do not leave a trailing comma after the last item.
 
+### Add a person image
+
+Place the optimized image in `assets/`, then add an `image` field to that person in `data/people.json`:
+
+```json
+"image": "assets/name.webp"
+```
+
+Images are optional. A person without an image renders cleanly without a fake portrait. The PI headshot should use `assets/piush-behera.webp` once the supplied source image is available.
+
 ### Hide or unhide a publication
 
-To hide a publication from the website, set `"hidden": true` for that entry in `data/publications.json`.
+To hide a publication from the website, set both an editorial status and a short reason in `data/publications.json`:
 
-Set it back to `false` to show the publication again. Hidden records remain in the file and the monthly synchronization preserves their `hidden` value.
+```json
+"hidden": true,
+"hidden_reason": "reason"
+```
+
+Set `hidden` back to `false` to show the publication again. Hidden records remain in the file and the monthly synchronization preserves both fields.
+
+Publication years render as native browser accordions. The current calendar year opens automatically when it has visible publications; otherwise the newest visible year opens. Earlier years begin collapsed, and visitors may open any number of years.
 
 ### Add a news item
 
@@ -62,10 +79,11 @@ News is sorted newest-first in the browser.
 1. requests the public Google Scholar profile with a normal browser user agent;
 2. reads publication rows, following pagination if needed;
 3. matches entries by Scholar citation ID, with a normalized-title hash as a fallback;
-4. preserves locally maintained fields, especially `hidden`;
-5. keeps unmatched local records so a partial Scholar response cannot erase data;
-6. writes atomically only after a non-empty, plausible result is parsed; and
-7. commits with the GitHub Actions bot only when `data/publications.json` changes.
+4. preserves every locally maintained/editorial field, including `hidden` and `hidden_reason`;
+5. defaults newly discovered APS March Meeting abstract records to hidden while leaving ordinary APS journal articles visible;
+6. keeps unmatched local records so a partial Scholar response cannot erase data;
+7. writes atomically only after a non-empty, plausible result is parsed; and
+8. commits with the GitHub Actions bot only when `data/publications.json` changes.
 
 To run it manually on a computer with Python 3:
 
@@ -75,7 +93,7 @@ python scripts/sync_publications.py
 
 To run the workflow on GitHub, open **Actions → Update publications → Run workflow**.
 
-Google Scholar does not provide a supported profile API, so its markup or automated-access rules may change. The updater is intentionally conservative: it exits with an error and leaves the last committed data untouched if Scholar is blocked, unavailable, empty, or unexpectedly short. The website always renders from the committed JSON file and does not depend on Scholar at page-load time.
+Google Scholar is the upstream publication source, but local editorial choices win during synchronization. Google Scholar does not provide a supported profile API, so its markup or automated-access rules may change. The updater is intentionally conservative: it exits with an error and leaves the last committed data untouched if Scholar is blocked, unavailable, empty, or unexpectedly short. The website always renders from the committed JSON file and does not depend on Scholar at page-load time.
 
 ## Local preview and validation
 
@@ -93,7 +111,7 @@ Run the repository validation before publishing:
 python scripts/validate_site.py
 ```
 
-The validation checks all six pages, navigation, local assets, JSON structure, publication ordering and IDs, hidden-publication filtering, removal of the old animation, and the custom domain.
+The validation checks all six pages, navigation, local assets and person images, JSON structure, publication ordering and IDs, required editorial exclusions, visible publication years, hidden-publication filtering, removal of the old animation, and the custom domain.
 
 ## GitHub Pages and the custom domain
 
