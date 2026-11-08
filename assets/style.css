@@ -369,14 +369,20 @@ h1 {
 }
 
 .person-image-frame {
+  position: relative;
   margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
 }
 
 .portrait-image {
+  position: absolute;
+  inset: 0;
+  display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 100%;
   object-fit: cover;
-  object-position: 70% center;
+  object-position: center;
   background: var(--surface);
 }
 
