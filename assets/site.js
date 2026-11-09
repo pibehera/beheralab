@@ -301,6 +301,41 @@
     }
   };
 
+  const renderResearch = () => {
+    const overview = document.querySelector("[data-research-overview]");
+    if (!overview) return;
+
+    const toggles = [...overview.querySelectorAll("[data-research-target]")];
+    const details = toggles
+      .map((toggle) => document.getElementById(toggle.dataset.researchTarget))
+      .filter(Boolean);
+
+    const closeAll = () => {
+      toggles.forEach((toggle) => {
+        toggle.setAttribute("aria-expanded", "false");
+        const indicator = toggle.querySelector(".research-thrust-indicator");
+        if (indicator) indicator.textContent = "+";
+      });
+      details.forEach((detail) => {
+        detail.hidden = true;
+      });
+    };
+
+    toggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const shouldOpen = toggle.getAttribute("aria-expanded") !== "true";
+        const detail = document.getElementById(toggle.dataset.researchTarget);
+        closeAll();
+        if (!shouldOpen || !detail) return;
+        toggle.setAttribute("aria-expanded", "true");
+        const indicator = toggle.querySelector(".research-thrust-indicator");
+        if (indicator) indicator.textContent = "−";
+        detail.hidden = false;
+      });
+    });
+  };
+
+  renderResearch();
   renderPeople();
   renderPublications();
   renderNews();
