@@ -120,6 +120,15 @@ def main() -> int:
     if len(people.get("groups", [])) != 3 or len(people.get("alumni", [])) != 1:
         errors.append("People data is missing required groups or alumni")
     principal_investigator = people.get("principal_investigator", {})
+    required_pi_identity = {
+        "name": "Piush Behera",
+        "role": "Assistant Professor",
+        "affiliation": "Materials Science and Engineering, UCLA",
+        "image": "assets/piush-behera.webp",
+    }
+    for key, value in required_pi_identity.items():
+        if principal_investigator.get(key) != value:
+            errors.append(f"PI profile is missing the required {key.replace('_', ' ')}")
     required_pi_details = {
         "email": "pbehera@seas.ucla.edu",
         "office": "Engineering V — 2121E",
@@ -134,10 +143,20 @@ def main() -> int:
     ]
     if principal_investigator.get("training") != expected_training:
         errors.append("PI training is missing or not in reverse chronological order")
+    expected_pi_links = ["Google Scholar", "LinkedIn"]
+    if [link.get("label") for link in principal_investigator.get("links", [])] != expected_pi_links:
+        errors.append("PI profile must visibly offer Google Scholar and LinkedIn links")
     if "previous_appointment" in principal_investigator:
         errors.append("PI data still contains the obsolete previous appointment field")
     if any(len(group.get("people", [])) != 1 for group in people.get("groups", [])):
         errors.append("Each current-member group must contain exactly one placeholder")
+    expected_group_headings = [
+        "Postdoctoral Researchers",
+        "Graduate Student Researchers",
+        "Undergraduate Researchers",
+    ]
+    if [group.get("heading") for group in people.get("groups", [])] != expected_group_headings:
+        errors.append("People subsection headings are missing or out of order")
     expected_alumni = [{"name": "None", "degree": "—", "year": "—", "placement": "—"}]
     if people.get("alumni") != expected_alumni:
         errors.append("Alumni placeholder row must read None | — | — | —")
@@ -147,6 +166,17 @@ def main() -> int:
         image = person.get("image")
         if image and not (ROOT / image).exists():
             errors.append(f"Missing image for {person.get('name', 'person')}: {image}")
+
+    people_renderer = (ROOT / "assets" / "site.js").read_text(encoding="utf-8")
+    required_renderer_calls = [
+        "educationList(pi.training)",
+        'appendProfileMeta("Email", pi.email',
+        'appendProfileMeta("Office", pi.office)',
+        "pi.links.forEach",
+    ]
+    for call in required_renderer_calls:
+        if call not in people_renderer:
+            errors.append(f"People renderer does not visibly render required PI content: {call}")
 
     publications = json.loads((ROOT / "data" / "publications.json").read_text(encoding="utf-8"))
     if not publications:
