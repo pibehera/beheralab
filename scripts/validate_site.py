@@ -99,6 +99,8 @@ def main() -> int:
             continue
         parser = LinkParser()
         document = page.read_text(encoding="utf-8")
+        if page_name != "index.html" and 'class="eyebrow"' in document:
+            errors.append(f"{page_name}: internal page eyebrow label should be removed")
         parser.feed(document)
         if not parser.has_main or not parser.has_skip or not parser.title_seen:
             errors.append(f"{page_name}: missing title, main target, or skip link")
@@ -115,20 +117,30 @@ def main() -> int:
         errors.append("CNAME must contain beheralab.com")
 
     people = json.loads((ROOT / "data" / "people.json").read_text(encoding="utf-8"))
-    if len(people.get("groups", [])) != 3 or len(people.get("alumni", [])) < 1:
+    if len(people.get("groups", [])) != 3 or len(people.get("alumni", [])) != 1:
         errors.append("People data is missing required groups or alumni")
     principal_investigator = people.get("principal_investigator", {})
     required_pi_details = {
-        "previous_appointment": (
-            "Postdoctoral Associate — Research Laboratory of Electronics, "
-            "Massachusetts Institute of Technology — 2026"
-        ),
         "email": "pbehera@seas.ucla.edu",
         "office": "Engineering V — 2121E",
     }
     for key, value in required_pi_details.items():
         if principal_investigator.get(key) != value:
             errors.append(f"PI profile is missing the required {key.replace('_', ' ')}")
+    expected_training = [
+        "Postdoctoral Research, Research Laboratory of Electronics, Massachusetts Institute of Technology, 2024–2026",
+        "Ph.D., Materials Science and Engineering, University of California, Berkeley, 2024",
+        "B.S., Materials Science and Engineering, University of Illinois Urbana-Champaign, 2019",
+    ]
+    if principal_investigator.get("training") != expected_training:
+        errors.append("PI training is missing or not in reverse chronological order")
+    if "previous_appointment" in principal_investigator:
+        errors.append("PI data still contains the obsolete previous appointment field")
+    if any(len(group.get("people", [])) != 1 for group in people.get("groups", [])):
+        errors.append("Each current-member group must contain exactly one placeholder")
+    expected_alumni = [{"name": "None", "degree": "—", "year": "—", "placement": "—"}]
+    if people.get("alumni") != expected_alumni:
+        errors.append("Alumni placeholder row must read None | — | — | —")
     people_records = [principal_investigator]
     people_records.extend(person for group in people.get("groups", []) for person in group.get("people", []))
     for person in people_records:
@@ -198,8 +210,9 @@ def main() -> int:
         "free-atoms",
         "transition-atoms",
         "lattice",
-        "device-layers",
-        "interconnects",
+        "device-tiers",
+        "vertical-vias",
+        "signal-lines",
     }
     if not required_lattice_ids.issubset(lattice_ids):
         errors.append("Lattice artwork is missing one or more required semantic groups")

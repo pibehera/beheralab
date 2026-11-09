@@ -4,10 +4,10 @@
     "role": "Assistant Professor",
     "affiliation": "Materials Science and Engineering, UCLA",
     "image": "assets/piush-behera.webp",
-    "previous_appointment": "Postdoctoral Associate — Research Laboratory of Electronics, Massachusetts Institute of Technology — 2026",
     "email": "pbehera@seas.ucla.edu",
     "office": "Engineering V — 2121E",
-    "education": [
+    "training": [
+      "Postdoctoral Research, Research Laboratory of Electronics, Massachusetts Institute of Technology, 2024–2026",
       "Ph.D., Materials Science and Engineering, University of California, Berkeley, 2024",
       "B.S., Materials Science and Engineering, University of Illinois Urbana-Champaign, 2019"
     ],
@@ -30,7 +30,7 @@
         {
           "name": "Postdoctoral Researcher — Placeholder",
           "role": "Postdoctoral Researcher",
-          "education": ["Ph.D., University", "B.S., University"]
+          "education": ["Ph.D., University"]
         }
       ]
     },
@@ -39,17 +39,7 @@
       "heading": "Graduate Student Researchers",
       "people": [
         {
-          "name": "Graduate Researcher — Placeholder 1",
-          "role": "Graduate Student Researcher",
-          "education": ["B.S., University"]
-        },
-        {
-          "name": "Graduate Researcher — Placeholder 2",
-          "role": "Graduate Student Researcher",
-          "education": ["B.S., University"]
-        },
-        {
-          "name": "Graduate Researcher — Placeholder 3",
+          "name": "Graduate Researcher — Placeholder",
           "role": "Graduate Student Researcher",
           "education": ["B.S., University"]
         }
@@ -60,17 +50,7 @@
       "heading": "Undergraduate Researchers",
       "people": [
         {
-          "name": "Undergraduate Researcher — Placeholder 1",
-          "role": "Undergraduate Researcher",
-          "education": ["B.S. candidate, UCLA"]
-        },
-        {
-          "name": "Undergraduate Researcher — Placeholder 2",
-          "role": "Undergraduate Researcher",
-          "education": ["B.S. candidate, UCLA"]
-        },
-        {
-          "name": "Undergraduate Researcher — Placeholder 3",
+          "name": "Undergraduate Researcher — Placeholder",
           "role": "Undergraduate Researcher",
           "education": ["B.S. candidate, UCLA"]
         }
@@ -79,10 +59,10 @@
   ],
   "alumni": [
     {
-      "name": "Alumnus — Placeholder",
-      "degree": "Degree — Placeholder",
-      "year": "Year",
-      "placement": "Placement — Placeholder"
+      "name": "None",
+      "degree": "—",
+      "year": "—",
+      "placement": "—"
     }
   ]
 }
