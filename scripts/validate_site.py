@@ -21,6 +21,8 @@ class LinkParser(HTMLParser):
         super().__init__()
         self.links: list[str] = []
         self.sources: list[str] = []
+        self.images: list[tuple[str, str | None]] = []
+        self.heading_levels: list[int] = []
         self.has_main = False
         self.has_skip = False
         self.title_seen = False
@@ -34,6 +36,10 @@ class LinkParser(HTMLParser):
                 self.has_skip = True
         if tag in {"img", "script"} and values.get("src"):
             self.sources.append(values["src"])
+        if tag == "img":
+            self.images.append((values.get("src", ""), values.get("alt")))
+        if tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
+            self.heading_levels.append(int(tag[1]))
         if tag == "link" and values.get("href"):
             self.sources.append(values["href"])
         if tag == "main" and values.get("id") == "main-content":
@@ -99,7 +105,7 @@ def main() -> int:
             continue
         parser = LinkParser()
         document = page.read_text(encoding="utf-8")
-        if "assets/style.css?v=20261108-7" not in document:
+        if "assets/style.css?v=20261108-8" not in document:
             errors.append(f"{page_name}: stylesheet cache version is inconsistent")
         if "assets/site.js" in document and "assets/site.js?v=20261108-4" not in document:
             errors.append(f"{page_name}: script cache version is inconsistent")
@@ -108,6 +114,16 @@ def main() -> int:
         parser.feed(document)
         if not parser.has_main or not parser.has_skip or not parser.title_seen:
             errors.append(f"{page_name}: missing title, main target, or skip link")
+        if parser.heading_levels.count(1) != 1:
+            errors.append(f"{page_name}: page must contain exactly one h1")
+        for previous, current in zip(parser.heading_levels, parser.heading_levels[1:]):
+            if current > previous + 1:
+                errors.append(f"{page_name}: heading hierarchy skips from h{previous} to h{current}")
+        for source, alt in parser.images:
+            if alt is None:
+                errors.append(f"{page_name}: image is missing alt text: {source}")
+            elif Path(source.split("?", 1)[0]).name.casefold() == alt.casefold():
+                errors.append(f"{page_name}: image alt text must not be a filename: {source}")
         nav_links = {link for link in parser.links if link in NAV_TARGETS}
         if nav_links != NAV_TARGETS:
             errors.append(f"{page_name}: incomplete primary navigation")
@@ -185,16 +201,23 @@ def main() -> int:
     research_document = (ROOT / "research.html").read_text(encoding="utf-8")
     if research_document.count('class="research-thrust"') != 3:
         errors.append("Research page must contain exactly three top-level thrusts")
-    if research_document.count('class="research-thrust-toggle"') != 3:
+    if research_document.count('class="research-thrust-button"') != 3:
         errors.append("Each Research thrust must have exactly one summary toggle")
     if research_document.count('type="button"') != 3:
         errors.append("Research summary toggles must use native buttons")
     if research_document.count('aria-controls="research-detail-') != 3:
         errors.append("Each Research summary toggle must identify its detail panel")
-    if research_document.count('class="research-image-placeholder"') != 6:
-        errors.append("Research page must contain two image placeholders per thrust")
-    if research_document.count('class="research-images"') != 3:
-        errors.append("Each Research detail panel must contain an image-placeholder group")
+    if research_document.count('class="research-expanded-media"') != 3:
+        errors.append("Each Research detail panel must contain one media region")
+    required_research_images = {
+        'src="assets/research/thrust-2-ultrathin.png"': "Atomic-resolution electron microscopy showing ultrathin ferroelectric, antiferroelectric, and dielectric phases.",
+        'src="assets/research/thrust-3-transistor.png"': "Electron microscopy image of a nanoscale silicon transistor.",
+    }
+    for source, alt in required_research_images.items():
+        if source not in research_document or f'alt="{alt}"' not in research_document:
+            errors.append(f"Research page is missing a supplied figure or its required alt text: {source}")
+    if 'aria-label="Schematic of atomic layer deposition and conformal thin-film growth."' not in research_document:
+        errors.append("Research page is missing the required accessible description for the pending ALD figure")
     if research_document.count('class="research-subtopics"') != 3:
         errors.append("Each Research detail panel must contain a subtopic group")
     if research_document.count("<p>TBD</p>") != 9:
@@ -225,6 +248,25 @@ def main() -> int:
     ]
     if any(token not in research_document + people_renderer for token in required_research_behavior):
         errors.append("Research page is missing accessible single-expansion behavior")
+
+    join_document = (ROOT / "join.html").read_text(encoding="utf-8")
+    required_join_content = {
+        "We do not currently have funded postdoctoral positions available.",
+        "Current or admitted UCLA graduate students",
+        "Undergraduate students",
+        "Prospective Ph.D. students",
+        "https://ugresearch.ucla.edu/",
+        "https://www.seasoasa.ucla.edu/urp/",
+        "https://www.mse.ucla.edu/graduate-admissions/",
+    }
+    if any(item not in join_document for item in required_join_content):
+        errors.append("Join Us page is missing required application guidance or official UCLA links")
+    if any(old_heading in join_document for old_heading in ("Who we are recruiting", "Research areas", "Get in touch")):
+        errors.append("Join Us page still contains an obsolete large section")
+
+    index_document = (ROOT / "index.html").read_text(encoding="utf-8")
+    if 'src="assets/lattice.svg?v=20261108-3" alt=""' not in index_document:
+        errors.append("Decorative homepage artwork must use empty alt text")
 
     publications = json.loads((ROOT / "data" / "publications.json").read_text(encoding="utf-8"))
     if not publications:
