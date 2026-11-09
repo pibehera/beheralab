@@ -222,7 +222,7 @@ h1 {
 
 .home-link {
   min-width: 0;
-  padding: 1.5rem 2rem 1.7rem;
+  padding: 1.3rem 1.6rem 1.45rem;
   text-decoration: none;
 }
 
@@ -569,6 +569,12 @@ h1 {
 
 .pi-meta a {
   color: var(--blue);
+}
+
+.mailing-address {
+  max-width: 30rem;
+  font-style: normal;
+  overflow-wrap: anywhere;
 }
 
 .person-links {
