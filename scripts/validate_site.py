@@ -99,6 +99,10 @@ def main() -> int:
             continue
         parser = LinkParser()
         document = page.read_text(encoding="utf-8")
+        if "assets/style.css?v=20261108-6" not in document:
+            errors.append(f"{page_name}: stylesheet cache version is inconsistent")
+        if "assets/site.js" in document and "assets/site.js?v=20261108-3" not in document:
+            errors.append(f"{page_name}: script cache version is inconsistent")
         if page_name != "index.html" and 'class="eyebrow"' in document:
             errors.append(f"{page_name}: internal page eyebrow label should be removed")
         parser.feed(document)
