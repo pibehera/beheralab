@@ -99,9 +99,9 @@ def main() -> int:
             continue
         parser = LinkParser()
         document = page.read_text(encoding="utf-8")
-        if "assets/style.css?v=20261108-6" not in document:
+        if "assets/style.css?v=20261108-7" not in document:
             errors.append(f"{page_name}: stylesheet cache version is inconsistent")
-        if "assets/site.js" in document and "assets/site.js?v=20261108-3" not in document:
+        if "assets/site.js" in document and "assets/site.js?v=20261108-4" not in document:
             errors.append(f"{page_name}: script cache version is inconsistent")
         if page_name != "index.html" and 'class="eyebrow"' in document:
             errors.append(f"{page_name}: internal page eyebrow label should be removed")
@@ -182,6 +182,50 @@ def main() -> int:
         if call not in people_renderer:
             errors.append(f"People renderer does not visibly render required PI content: {call}")
 
+    research_document = (ROOT / "research.html").read_text(encoding="utf-8")
+    if research_document.count('class="research-thrust"') != 3:
+        errors.append("Research page must contain exactly three top-level thrusts")
+    if research_document.count('class="research-thrust-toggle"') != 3:
+        errors.append("Each Research thrust must have exactly one summary toggle")
+    if research_document.count('type="button"') != 3:
+        errors.append("Research summary toggles must use native buttons")
+    if research_document.count('aria-controls="research-detail-') != 3:
+        errors.append("Each Research summary toggle must identify its detail panel")
+    if research_document.count('class="research-image-placeholder"') != 6:
+        errors.append("Research page must contain two image placeholders per thrust")
+    if research_document.count('class="research-images"') != 3:
+        errors.append("Each Research detail panel must contain an image-placeholder group")
+    if research_document.count('class="research-subtopics"') != 3:
+        errors.append("Each Research detail panel must contain a subtopic group")
+    if research_document.count("<p>TBD</p>") != 9:
+        errors.append("Each Research subtopic must use the exact TBD body text")
+    required_research_headings = {
+        "Atomically Precise Synthesis",
+        "Materials at Ultrathin &amp; Ultrasmall Limits",
+        "Functional Materials for Energy-Efficient Electronics",
+        "Atomic Layer Deposition",
+        "Heterostructures &amp; Interfaces",
+        "Conformal Growth in 3D Architectures",
+        "Dimensional Scaling &amp; Phase Stability",
+        "Interfaces, Grain Size &amp; Confinement",
+        "Emergent Properties at the Unit-Cell Limit",
+        "Energy-Efficient Logic &amp; Memory",
+        "Multifunctional Electronics",
+        "Beyond-CMOS &amp; Quantum Integration",
+    }
+    if any(heading not in research_document for heading in required_research_headings):
+        errors.append("Research page is missing one or more required thrust or subtopic headings")
+    if any(old_class in research_document for old_class in ("research-grid", "research-direction", "direction-number")):
+        errors.append("Research page still contains the obsolete four-card layout")
+    required_research_behavior = [
+        'aria-expanded="false"',
+        "data-research-target",
+        'toggle.setAttribute("aria-expanded", "true")',
+        "closeAll();",
+    ]
+    if any(token not in research_document + people_renderer for token in required_research_behavior):
+        errors.append("Research page is missing accessible single-expansion behavior")
+
     publications = json.loads((ROOT / "data" / "publications.json").read_text(encoding="utf-8"))
     if not publications:
         errors.append("Publication data is empty")
@@ -244,6 +288,18 @@ def main() -> int:
         "free-atoms",
         "transition-atoms",
         "lattice",
+        "device-transition",
+        "transistor",
+        "source-drain-routing",
+        "gate-routing",
+    }
+    if not required_lattice_ids.issubset(lattice_ids):
+        errors.append("Lattice artwork is missing one or more required semantic groups")
+    deprecated_lattice_ids = {
+        "device-tiers",
+        "signal-lines",
+        "device-layers",
+        "interconnects",
         "device-interposer",
         "active-devices",
         "upper-device-tiers",
@@ -251,13 +307,13 @@ def main() -> int:
         "signal-routing",
         "io-nodes",
     }
-    if not required_lattice_ids.issubset(lattice_ids):
-        errors.append("Lattice artwork is missing one or more required semantic groups")
-    deprecated_lattice_ids = {"device-tiers", "signal-lines", "device-layers", "interconnects"}
     if lattice_ids.intersection(deprecated_lattice_ids):
         errors.append("Lattice artwork still contains a deprecated slab-stack group")
     if any(node.tag.rsplit("}", 1)[-1] == "text" for node in lattice.iter()):
         errors.append("Lattice artwork must not contain visible text")
+    animated_svg_elements = {"animate", "animateMotion", "animateTransform", "set"}
+    if any(node.tag.rsplit("}", 1)[-1] in animated_svg_elements for node in lattice.iter()):
+        errors.append("Lattice artwork must remain static")
 
     site_sources = [ROOT / name for name in PAGES]
     site_sources.extend(path for path in (ROOT / "assets").rglob("*") if path.is_file())
