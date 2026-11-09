@@ -208,7 +208,7 @@ h1 {
 }
 
 .hero-visual img {
-  width: min(100%, 23.25rem);
+  width: min(100%, 28.5rem);
   height: auto;
   object-fit: contain;
 }
@@ -779,7 +779,7 @@ tbody tr:last-child td {
   }
 
   .hero-visual img {
-    width: min(100%, 15.25rem);
+    width: min(100%, 20rem);
   }
 
   .page-header {

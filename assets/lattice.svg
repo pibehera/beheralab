@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 760" role="img" aria-hidden="true">
-  <g id="free-atoms" transform="translate(40)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 760" role="img" aria-hidden="true">
+  <g id="free-atoms" transform="translate(80)">
     <g fill="#d5d5d5">
       <circle cx="54" cy="82" r="5"/><circle cx="114" cy="48" r="4"/><circle cx="174" cy="84" r="5"/>
       <circle cx="238" cy="44" r="5"/><circle cx="304" cy="68" r="4"/><circle cx="372" cy="46" r="5"/>
@@ -27,7 +27,7 @@
     </g>
   </g>
 
-  <g id="transition-atoms" transform="translate(40)">
+  <g id="transition-atoms" transform="translate(80)">
     <circle cx="146" cy="238" r="4" fill="#d5d5d5"/>
     <circle cx="374" cy="244" r="4" fill="#8c8c8c"/>
     <circle cx="178" cy="252" r="5" fill="#8c8c8c"/>
@@ -38,7 +38,7 @@
     <circle cx="290" cy="286" r="4" fill="#c94c4c"/>
   </g>
 
-  <g id="lattice" transform="translate(40)">
+  <g id="lattice" transform="translate(80)">
     <g fill="none" stroke-linejoin="round">
       <rect x="140" y="270" width="240" height="240" stroke="#d7d7d7" stroke-width="1.25"/>
       <path d="M188 270v240M236 270v240M284 270v240M332 270v240" stroke="#e2e2e2" stroke-width="1"/>
@@ -72,68 +72,106 @@
     <circle cx="295" cy="460" r="6" fill="#2774ae"/>
   </g>
 
-  <g id="device-tiers" stroke-linejoin="round">
-    <!-- Three progressively wider isometric tiers establish the 3D IC stack. -->
-    <path d="M244 522h112l25 15H269z" fill="#f5f5f5" stroke="#9f9f9f" stroke-width="1.4"/>
-    <path d="M269 537h112v22H269z" fill="#d0d0d0" stroke="#9f9f9f" stroke-width="1.4"/>
-    <path d="M244 522l25 15v22l-25-15z" fill="#e1e1e1" stroke="#9f9f9f" stroke-width="1.4"/>
-
-    <path d="M208 574h184l32 19H240z" fill="#f7f7f7" stroke="#949494" stroke-width="1.4"/>
-    <path d="M240 593h184v25H240z" fill="#c7c7c7" stroke="#949494" stroke-width="1.4"/>
-    <path d="M208 574l32 19v25l-32-19z" fill="#dedede" stroke="#949494" stroke-width="1.4"/>
-
-    <path d="M158 636h284l40 23H198z" fill="#f5f5f5" stroke="#898989" stroke-width="1.5"/>
-    <path d="M198 659h284v31H198z" fill="#bdbdbd" stroke="#898989" stroke-width="1.5"/>
-    <path d="M158 636l40 23v31l-40-23z" fill="#d6d6d6" stroke="#898989" stroke-width="1.5"/>
-
-    <!-- Minimal device blocks on the active faces. -->
-    <path d="M281 527h35l11 7h-35z" fill="#1a1a1a" stroke="none"/>
-    <path d="M328 531h23l9 5h-23z" fill="#777777" stroke="none"/>
-    <path d="M258 581h42l13 8h-42z" fill="#292929" stroke="none"/>
-    <path d="M335 581h38l13 8h-38z" fill="#777777" stroke="none"/>
-    <rect x="286" y="599" width="30" height="12" fill="#1a1a1a" stroke="none"/>
-    <rect x="358" y="599" width="24" height="12" fill="#6e6e6e" stroke="none"/>
-    <path d="M220 644h47l15 9h-47z" fill="#242424" stroke="none"/>
-    <path d="M325 644h50l16 9h-50z" fill="#686868" stroke="none"/>
-    <path d="M405 644h25l12 7h-25z" fill="#1a1a1a" stroke="none"/>
-    <rect x="244" y="668" width="34" height="14" fill="#252525" stroke="none"/>
-    <rect x="338" y="668" width="42" height="14" fill="#646464" stroke="none"/>
-    <rect x="417" y="668" width="27" height="14" fill="#252525" stroke="none"/>
+  <g id="device-interposer" stroke-linejoin="round">
+    <!-- A wide, thin substrate anchors the functional circuit. -->
+    <path d="M70 654H540L615 696H145Z" fill="#f3f3f3" stroke="#858585" stroke-width="1.5"/>
+    <path d="M145 696H615V711H145Z" fill="#bcbcbc" stroke="#858585" stroke-width="1.5"/>
+    <path d="M70 654L145 696V711L70 669Z" fill="#d7d7d7" stroke="#858585" stroke-width="1.5"/>
+    <path d="M540 654L615 696V711L540 669Z" fill="#cccccc" stroke="#858585" stroke-width="1.5"/>
   </g>
 
-  <g id="vertical-vias" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M292 534v52" stroke="#707070" stroke-width="2"/>
-    <path d="M345 535v53" stroke="#2774ae" stroke-width="2"/>
-    <path d="M272 588v66" stroke="#777777" stroke-width="2"/>
-    <path d="M307 608v48" stroke="#777777" stroke-width="2"/>
-    <path d="M371 588v67" stroke="#c94c4c" stroke-width="2"/>
-    <path d="M419 596v61" stroke="#777777" stroke-width="2"/>
+  <g id="active-devices" stroke-linejoin="round">
+    <!-- Abstract active regions: gate bars, islands, plates, and contact pads. -->
+    <g fill="#202020">
+      <path d="M122 662h48l17 10h-48z"/><path d="M226 659h55l17 10h-55z"/>
+      <path d="M341 672h52l16 9h-52z"/><path d="M474 661h43l17 10h-43z"/>
+      <path d="M183 596h47l13 8h-47z"/><path d="M292 599h40l13 8h-40z"/>
+      <path d="M368 595h27l13 8h-27z"/><path d="M367 536h48l11 7h-48z"/>
+    </g>
+    <g fill="#666666">
+      <path d="M176 678h31l12 7h-31z"/><path d="M304 658h25l13 8h-25z"/>
+      <path d="M418 678h36l13 8h-36z"/><path d="M247 598h26l12 7h-26z"/>
+      <path d="M425 539h28l10 6h-28z"/>
+    </g>
+    <g fill="none" stroke="#303030" stroke-width="3">
+      <path d="M267 676h45"/><path d="M275 682h45"/>
+      <path d="M456 671h35"/><path d="M463 677h35"/>
+      <path d="M327 542h29"/><path d="M333 547h29"/>
+    </g>
+    <g fill="#1a1a1a">
+      <circle cx="112" cy="660" r="4"/><circle cx="215" cy="661" r="4"/>
+      <circle cx="331" cy="670" r="4"/><circle cx="462" cy="661" r="4"/>
+      <circle cx="174" cy="596" r="3.5"/><circle cx="283" cy="598" r="3.5"/>
+      <circle cx="358" cy="595" r="3.5"/><circle cx="357" cy="535" r="3.5"/>
+    </g>
+  </g>
+
+  <g id="upper-device-tiers" stroke-linejoin="round">
+    <!-- Laterally offset tiers avoid a centered material-stack silhouette. -->
+    <path d="M150 588H382L426 613H194Z" fill="#f5f5f5" stroke="#919191" stroke-width="1.4"/>
+    <path d="M194 613H426V625H194Z" fill="#c7c7c7" stroke="#919191" stroke-width="1.4"/>
+    <path d="M150 588L194 613V625L150 600Z" fill="#dddddd" stroke="#919191" stroke-width="1.4"/>
+    <path d="M322 530H470L497 546H349Z" fill="#f6f6f6" stroke="#919191" stroke-width="1.4"/>
+    <path d="M349 546H497V557H349Z" fill="#c9c9c9" stroke="#919191" stroke-width="1.4"/>
+    <path d="M322 530L349 546V557L322 541Z" fill="#dfdfdf" stroke="#919191" stroke-width="1.4"/>
+    <g fill="#202020" stroke="none">
+      <path d="M183 596h47l13 8h-47z"/><path d="M292 599h40l13 8h-40z"/>
+      <path d="M368 595h27l13 8h-27z"/><path d="M367 536h48l11 7h-48z"/>
+    </g>
+    <g fill="#666666" stroke="none">
+      <path d="M247 598h26l12 7h-26z"/><path d="M425 539h28l10 6h-28z"/>
+    </g>
+    <g fill="none" stroke="#303030" stroke-width="3">
+      <path d="M327 542h29"/><path d="M333 547h29"/>
+    </g>
     <g fill="#1a1a1a" stroke="none">
-      <circle cx="292" cy="534" r="3.5"/><circle cx="292" cy="586" r="3.5"/>
-      <circle cx="272" cy="588" r="3.5"/><circle cx="272" cy="654" r="3.5"/>
-      <circle cx="307" cy="608" r="3.5"/><circle cx="307" cy="656" r="3.5"/>
-      <circle cx="419" cy="596" r="3.5"/><circle cx="419" cy="657" r="3.5"/>
-    </g>
-    <g stroke="none">
-      <circle cx="345" cy="535" r="3.5" fill="#2774ae"/><circle cx="345" cy="588" r="3.5" fill="#2774ae"/>
-      <circle cx="371" cy="588" r="3.5" fill="#c94c4c"/><circle cx="371" cy="655" r="3.5" fill="#c94c4c"/>
+      <circle cx="174" cy="596" r="3.5"/><circle cx="283" cy="598" r="3.5"/>
+      <circle cx="358" cy="595" r="3.5"/><circle cx="357" cy="535" r="3.5"/>
     </g>
   </g>
 
-  <g id="signal-lines" fill="none" stroke="#707070" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter">
-    <path d="M252 545h34v-9h43"/>
-    <path d="M303 552h54v-11h20"/>
-    <path d="M219 603h43v-12h65v10h21"/>
-    <path d="M315 611h28v-15h63"/>
-    <path d="M172 670h45v-12h90v17h31"/>
-    <path d="M278 682v20h-77v18h-54"/>
-    <path d="M380 675h33v17h70"/>
-    <path d="M444 682v38h49"/>
-    <path d="M235 652h-55v-18h-36" stroke="#2774ae" stroke-width="2"/>
-    <path d="M391 651h65v-18h31" stroke="#c94c4c" stroke-width="2"/>
-    <circle cx="144" cy="634" r="4" fill="#2774ae" stroke="none"/>
-    <circle cx="487" cy="633" r="4" fill="#c94c4c" stroke="none"/>
-    <circle cx="147" cy="720" r="4" fill="#1a1a1a" stroke="none"/>
-    <circle cx="493" cy="720" r="4" fill="#777777" stroke="none"/>
+  <g id="vertical-vias" fill="none" stroke-linecap="round">
+    <path d="M340 510V535" stroke="#5f5f5f" stroke-width="2.2"/>
+    <path d="M365 544V600" stroke="#2774ae" stroke-width="2.3"/>
+    <path d="M424 544V603" stroke="#5f5f5f" stroke-width="2.2"/>
+    <path d="M205 603V666" stroke="#5f5f5f" stroke-width="2.2"/>
+    <path d="M300 604V666" stroke="#5f5f5f" stroke-width="2.2"/>
+    <path d="M380 602V675" stroke="#5f5f5f" stroke-width="2.2"/>
+    <g fill="#1a1a1a" stroke="none">
+      <circle cx="340" cy="510" r="3.5"/><circle cx="340" cy="535" r="3.5"/>
+      <circle cx="424" cy="544" r="3.5"/><circle cx="424" cy="603" r="3.5"/>
+      <circle cx="205" cy="603" r="3.5"/><circle cx="205" cy="666" r="3.5"/>
+      <circle cx="300" cy="604" r="3.5"/><circle cx="300" cy="666" r="3.5"/>
+      <circle cx="380" cy="602" r="3.5"/><circle cx="380" cy="675" r="3.5"/>
+    </g>
+    <g fill="#2774ae" stroke="none">
+      <circle cx="365" cy="544" r="4"/><circle cx="365" cy="600" r="4"/>
+    </g>
+  </g>
+
+  <g id="signal-routing" fill="none" stroke="#5f5f5f" stroke-width="1.7" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- Orthogonal routes connect device primitives, vias, and exterior I/O. -->
+    <path d="M332 540H365V536H416V542H472"/>
+    <path d="M162 601H205V596H260V604H300"/>
+    <path d="M300 604H338V598H380V603H414"/>
+    <path d="M91 666H139V661H205V675H268V665H331"/>
+    <path d="M331 670H380V680H444V665H526"/>
+    <path d="M205 683H112V720H42"/>
+    <path d="M300 686V733H340"/>
+    <path d="M444 683H566V717H640"/>
+    <path d="M139 675H77V644H28" stroke="#2774ae" stroke-width="2.1"/>
+    <path d="M526 671H574V642H651" stroke="#c94c4c" stroke-width="2.1"/>
+    <path d="M424 604H468V624H538"/>
+  </g>
+
+  <g id="io-nodes" stroke="none">
+    <circle cx="28" cy="644" r="4.5" fill="#2774ae"/>
+    <circle cx="42" cy="720" r="4" fill="#1a1a1a"/>
+    <circle cx="340" cy="733" r="4" fill="#686868"/>
+    <circle cx="538" cy="624" r="4" fill="#686868"/>
+    <circle cx="651" cy="642" r="4.5" fill="#c94c4c"/>
+    <circle cx="640" cy="717" r="4" fill="#1a1a1a"/>
+    <rect x="63" y="661" width="9" height="9" fill="#777777"/>
+    <rect x="576" y="712" width="9" height="9" fill="#777777"/>
   </g>
 </svg>
