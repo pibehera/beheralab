@@ -198,8 +198,9 @@ def main() -> int:
         "free-atoms",
         "transition-atoms",
         "lattice",
-        "device-layers",
-        "interconnects",
+        "device-tiers",
+        "vertical-vias",
+        "signal-lines",
     }
     if not required_lattice_ids.issubset(lattice_ids):
         errors.append("Lattice artwork is missing one or more required semantic groups")
