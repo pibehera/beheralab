@@ -105,9 +105,9 @@ def main() -> int:
             continue
         parser = LinkParser()
         document = page.read_text(encoding="utf-8")
-        if "assets/style.css?v=20261108-8" not in document:
+        if "assets/style.css?v=20261108-9" not in document:
             errors.append(f"{page_name}: stylesheet cache version is inconsistent")
-        if "assets/site.js" in document and "assets/site.js?v=20261108-4" not in document:
+        if "assets/site.js" in document and "assets/site.js?v=20261108-5" not in document:
             errors.append(f"{page_name}: script cache version is inconsistent")
         if page_name != "index.html" and 'class="eyebrow"' in document:
             errors.append(f"{page_name}: internal page eyebrow label should be removed")
@@ -152,6 +152,12 @@ def main() -> int:
     required_pi_details = {
         "email": "pbehera@seas.ucla.edu",
         "office": "Engineering V — 2121E",
+        "mailing_address": [
+            "UCLA Samueli School of Engineering",
+            "Department of Materials Science and Engineering",
+            "410 Westwood Plaza, 2121E Engineering V",
+            "Los Angeles, CA 90095-1595",
+        ],
     }
     for key, value in required_pi_details.items():
         if principal_investigator.get(key) != value:
@@ -192,6 +198,8 @@ def main() -> int:
         "educationList(pi.training)",
         'appendProfileMeta("Email", pi.email',
         'appendProfileMeta("Office", pi.office)',
+        "appendMailingAddress(pi.mailing_address)",
+        'document.createElement("address")',
         "pi.links.forEach",
     ]
     for call in required_renderer_calls:
@@ -210,7 +218,7 @@ def main() -> int:
     if research_document.count('class="research-expanded-media"') != 3:
         errors.append("Each Research detail panel must contain one media region")
     required_research_images = {
-        'src="assets/research/thrust-2-ultrathin.png"': "Atomic-resolution electron microscopy showing ultrathin ferroelectric, antiferroelectric, and dielectric phases.",
+        'src="assets/research/thrust-2-ultrathin.png"': "Atomic-resolution electron microscopy of an ultrathin ZrO2 film showing ferroelectric, antiferroelectric, and dielectric phases.",
         'src="assets/research/thrust-3-transistor.png"': "Electron microscopy image of a nanoscale silicon transistor.",
     }
     for source, alt in required_research_images.items():
@@ -267,6 +275,14 @@ def main() -> int:
     index_document = (ROOT / "index.html").read_text(encoding="utf-8")
     if 'src="assets/lattice.svg?v=20261108-3" alt=""' not in index_document:
         errors.append("Decorative homepage artwork must use empty alt text")
+    required_home_tiles = {
+        '<a class="home-link" href="research.html">': ("01", "Research", "Atomic-scale synthesis, ultrathin materials, and functional electronic systems."),
+        '<a class="home-link" href="people.html">': ("02", "Meet the Team", "Meet the researchers building the Atoms to Bits Lab at UCLA."),
+        '<a class="home-link" href="join.html">': ("03", "Join the Lab", "Opportunities for graduate students, undergraduate researchers, and postdoctoral researchers."),
+    }
+    for link, content in required_home_tiles.items():
+        if link not in index_document or any(item not in index_document for item in content):
+            errors.append(f"Homepage is missing a required summary tile: {content[1]}")
 
     publications = json.loads((ROOT / "data" / "publications.json").read_text(encoding="utf-8"))
     if not publications:

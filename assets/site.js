@@ -96,8 +96,23 @@
         }
         profileMeta.append(term, description);
       };
+      const appendMailingAddress = (lines = []) => {
+        if (!lines.length) return;
+        const term = document.createElement("dt");
+        term.textContent = "Mailing Address";
+        const description = document.createElement("dd");
+        const address = document.createElement("address");
+        address.className = "mailing-address";
+        lines.forEach((line, index) => {
+          if (index > 0) address.append(document.createElement("br"));
+          address.append(document.createTextNode(line));
+        });
+        description.append(address);
+        profileMeta.append(term, description);
+      };
       appendProfileMeta("Email", pi.email, `mailto:${pi.email}`);
       appendProfileMeta("Office", pi.office);
+      appendMailingAddress(pi.mailing_address);
       details.append(name, role, affiliation, educationList(pi.training), profileMeta, links);
 
       if (pi.image) {
