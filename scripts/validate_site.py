@@ -218,7 +218,7 @@ def main() -> int:
     if research_document.count('class="research-expanded-media"') != 3:
         errors.append("Each Research detail panel must contain one media region")
     required_research_images = {
-        'src="assets/research/thrust-2-ultrathin.png"': "Atomic-resolution electron microscopy of an ultrathin ZrO2 film showing ferroelectric, antiferroelectric, and dielectric phases.",
+        'src="assets/research/thrust-2-zro2-film.png?v=20261108-1"': "Atomic-resolution electron microscopy of an ultrathin ZrO2 film showing ferroelectric, antiferroelectric, and dielectric phases.",
         'src="assets/research/thrust-3-transistor.png"': "Electron microscopy image of a nanoscale silicon transistor.",
     }
     for source, alt in required_research_images.items():
