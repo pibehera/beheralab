@@ -185,8 +185,18 @@ def main() -> int:
     research_document = (ROOT / "research.html").read_text(encoding="utf-8")
     if research_document.count('class="research-thrust"') != 3:
         errors.append("Research page must contain exactly three top-level thrusts")
+    if research_document.count('class="research-thrust-toggle"') != 3:
+        errors.append("Each Research thrust must have exactly one summary toggle")
+    if research_document.count('type="button"') != 3:
+        errors.append("Research summary toggles must use native buttons")
+    if research_document.count('aria-controls="research-detail-') != 3:
+        errors.append("Each Research summary toggle must identify its detail panel")
     if research_document.count('class="research-image-placeholder"') != 6:
         errors.append("Research page must contain two image placeholders per thrust")
+    if research_document.count('class="research-images"') != 3:
+        errors.append("Each Research detail panel must contain an image-placeholder group")
+    if research_document.count('class="research-subtopics"') != 3:
+        errors.append("Each Research detail panel must contain a subtopic group")
     if research_document.count("<p>TBD</p>") != 9:
         errors.append("Each Research subtopic must use the exact TBD body text")
     required_research_headings = {
@@ -301,6 +311,9 @@ def main() -> int:
         errors.append("Lattice artwork still contains a deprecated slab-stack group")
     if any(node.tag.rsplit("}", 1)[-1] == "text" for node in lattice.iter()):
         errors.append("Lattice artwork must not contain visible text")
+    animated_svg_elements = {"animate", "animateMotion", "animateTransform", "set"}
+    if any(node.tag.rsplit("}", 1)[-1] in animated_svg_elements for node in lattice.iter()):
+        errors.append("Lattice artwork must remain static")
 
     site_sources = [ROOT / name for name in PAGES]
     site_sources.extend(path for path in (ROOT / "assets").rglob("*") if path.is_file())
