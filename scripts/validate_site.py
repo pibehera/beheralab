@@ -240,12 +240,18 @@ def main() -> int:
         "free-atoms",
         "transition-atoms",
         "lattice",
-        "device-tiers",
+        "device-interposer",
+        "active-devices",
+        "upper-device-tiers",
         "vertical-vias",
-        "signal-lines",
+        "signal-routing",
+        "io-nodes",
     }
     if not required_lattice_ids.issubset(lattice_ids):
         errors.append("Lattice artwork is missing one or more required semantic groups")
+    deprecated_lattice_ids = {"device-tiers", "signal-lines", "device-layers", "interconnects"}
+    if lattice_ids.intersection(deprecated_lattice_ids):
+        errors.append("Lattice artwork still contains a deprecated slab-stack group")
     if any(node.tag.rsplit("}", 1)[-1] == "text" for node in lattice.iter()):
         errors.append("Lattice artwork must not contain visible text")
 
