@@ -6,6 +6,12 @@
     "image": "assets/piush-behera.webp",
     "email": "pbehera@seas.ucla.edu",
     "office": "Engineering V — 2121E",
+    "mailing_address": [
+      "UCLA Samueli School of Engineering",
+      "Department of Materials Science and Engineering",
+      "410 Westwood Plaza, 2121E Engineering V",
+      "Los Angeles, CA 90095-1595"
+    ],
     "training": [
       "Postdoctoral Research, Research Laboratory of Electronics, Massachusetts Institute of Technology, 2024–2026",
       "Ph.D., Materials Science and Engineering, University of California, Berkeley, 2024",
