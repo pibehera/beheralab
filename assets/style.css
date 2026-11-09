@@ -460,8 +460,8 @@ h1 {
 }
 
 .person-card {
-  min-height: 10.5rem;
-  padding: 1.6rem;
+  min-height: 8rem;
+  padding: 1.45rem;
   background: var(--background);
 }
 

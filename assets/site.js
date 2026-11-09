@@ -96,10 +96,9 @@
         }
         profileMeta.append(term, description);
       };
-      appendProfileMeta("Previous appointment", pi.previous_appointment);
       appendProfileMeta("Email", pi.email, `mailto:${pi.email}`);
       appendProfileMeta("Office", pi.office);
-      details.append(name, role, affiliation, educationList(pi.education), profileMeta, links);
+      details.append(name, role, affiliation, educationList(pi.training), profileMeta, links);
 
       if (pi.image) {
         const imageFrame = document.createElement("figure");
