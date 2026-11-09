@@ -99,6 +99,8 @@ def main() -> int:
             continue
         parser = LinkParser()
         document = page.read_text(encoding="utf-8")
+        if page_name != "index.html" and 'class="eyebrow"' in document:
+            errors.append(f"{page_name}: internal page eyebrow label should be removed")
         parser.feed(document)
         if not parser.has_main or not parser.has_skip or not parser.title_seen:
             errors.append(f"{page_name}: missing title, main target, or skip link")
