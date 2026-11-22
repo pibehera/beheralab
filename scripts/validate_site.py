@@ -105,7 +105,7 @@ def main() -> int:
             continue
         parser = LinkParser()
         document = page.read_text(encoding="utf-8")
-        if "assets/style.css?v=20261121-10" not in document:
+        if "assets/style.css?v=20261121-11" not in document:
             errors.append(f"{page_name}: stylesheet cache version is inconsistent")
         if "assets/site.js" in document and "assets/site.js?v=20261121-6" not in document:
             errors.append(f"{page_name}: script cache version is inconsistent")
@@ -189,10 +189,9 @@ def main() -> int:
     )
     expected_lior = {
         "name": "Lior Gabay",
-        "role": "Graduate Student Researcher",
-        "image": "assets/lior-gabay.jpg",
+        "role": "M.S. Candidate, Materials Science and Engineering, University of California, Los Angeles",
+        "image": "assets/lior-gabay-cropped.jpg",
         "education": [
-            "M.S. Candidate, Materials Science and Engineering, University of California, Los Angeles",
             "B.S., Materials Engineering, University of California, Los Angeles, 2026",
         ],
         "bio": "I am currently a master’s student at UCLA. My previous research interests include soft robotics, polymer systems, and polymer matrix composites (PMCs). I’m currently transitioning into semiconductors and electronic materials. Outside the lab, I enjoy gaming, trying new foods, and going out with friends.",

@@ -46,10 +46,9 @@
       "people": [
         {
           "name": "Lior Gabay",
-          "role": "Graduate Student Researcher",
-          "image": "assets/lior-gabay.jpg",
+          "role": "M.S. Candidate, Materials Science and Engineering, University of California, Los Angeles",
+          "image": "assets/lior-gabay-cropped.jpg",
           "education": [
-            "M.S. Candidate, Materials Science and Engineering, University of California, Los Angeles",
             "B.S., Materials Engineering, University of California, Los Angeles, 2026"
           ],
           "bio": "I am currently a master’s student at UCLA. My previous research interests include soft robotics, polymer systems, and polymer matrix composites (PMCs). I’m currently transitioning into semiconductors and electronic materials. Outside the lab, I enjoy gaming, trying new foods, and going out with friends."
