@@ -625,6 +625,13 @@ h1 {
   font-size: 0.86rem;
 }
 
+.person-bio {
+  margin: 1.15rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--line-light);

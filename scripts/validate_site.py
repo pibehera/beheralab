@@ -105,9 +105,9 @@ def main() -> int:
             continue
         parser = LinkParser()
         document = page.read_text(encoding="utf-8")
-        if "assets/style.css?v=20261108-9" not in document:
+        if "assets/style.css?v=20261121-10" not in document:
             errors.append(f"{page_name}: stylesheet cache version is inconsistent")
-        if "assets/site.js" in document and "assets/site.js?v=20261108-5" not in document:
+        if "assets/site.js" in document and "assets/site.js?v=20261121-6" not in document:
             errors.append(f"{page_name}: script cache version is inconsistent")
         if page_name != "index.html" and 'class="eyebrow"' in document:
             errors.append(f"{page_name}: internal page eyebrow label should be removed")
@@ -175,7 +175,7 @@ def main() -> int:
     if "previous_appointment" in principal_investigator:
         errors.append("PI data still contains the obsolete previous appointment field")
     if any(len(group.get("people", [])) != 1 for group in people.get("groups", [])):
-        errors.append("Each current-member group must contain exactly one placeholder")
+        errors.append("Each current-member group must contain exactly one member entry")
     expected_group_headings = [
         "Postdoctoral Researchers",
         "Graduate Student Researchers",
@@ -183,6 +183,22 @@ def main() -> int:
     ]
     if [group.get("heading") for group in people.get("groups", [])] != expected_group_headings:
         errors.append("People subsection headings are missing or out of order")
+    graduate_group = next(
+        (group for group in people.get("groups", []) if group.get("id") == "graduate-student-researchers"),
+        {},
+    )
+    expected_lior = {
+        "name": "Lior Gabay",
+        "role": "Graduate Student Researcher",
+        "image": "assets/lior-gabay.jpg",
+        "education": [
+            "M.S. Candidate, Materials Science and Engineering, University of California, Los Angeles",
+            "B.S., Materials Engineering, University of California, Los Angeles, 2026",
+        ],
+        "bio": "I am currently a master’s student at UCLA. My previous research interests include soft robotics, polymer systems, and polymer matrix composites (PMCs). I’m currently transitioning into semiconductors and electronic materials. Outside the lab, I enjoy gaming, trying new foods, and going out with friends.",
+    }
+    if graduate_group.get("people") != [expected_lior]:
+        errors.append("Graduate Student Researchers must contain Lior Gabay's complete profile")
     expected_alumni = [{"name": "None", "degree": "—", "year": "—", "placement": "—"}]
     if people.get("alumni") != expected_alumni:
         errors.append("Alumni placeholder row must read None | — | — | —")
@@ -201,6 +217,8 @@ def main() -> int:
         "appendMailingAddress(pi.mailing_address)",
         'document.createElement("address")',
         "pi.links.forEach",
+        "person.bio",
+        'biography.className = "person-bio"',
     ]
     for call in required_renderer_calls:
         if call not in people_renderer:
