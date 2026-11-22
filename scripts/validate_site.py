@@ -105,7 +105,7 @@ def main() -> int:
             continue
         parser = LinkParser()
         document = page.read_text(encoding="utf-8")
-        if "assets/style.css?v=20261121-11" not in document:
+        if "assets/style.css?v=20261122-12" not in document:
             errors.append(f"{page_name}: stylesheet cache version is inconsistent")
         if "assets/site.js" in document and "assets/site.js?v=20261121-6" not in document:
             errors.append(f"{page_name}: script cache version is inconsistent")
