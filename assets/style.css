@@ -604,10 +604,12 @@ h1 {
 }
 
 .person-card-image {
-  width: 100%;
+  display: block;
+  width: min(100%, 18rem);
   aspect-ratio: 4 / 5;
   margin-bottom: 1.25rem;
   object-fit: cover;
+  object-position: center top;
 }
 
 .person-card .person-name {
