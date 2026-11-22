@@ -166,6 +166,12 @@
           personRole.className = "person-role";
           personRole.textContent = person.role;
           card.append(personName, personRole, educationList(person.education));
+          if (person.bio) {
+            const biography = document.createElement("p");
+            biography.className = "person-bio";
+            biography.textContent = person.bio;
+            card.append(biography);
+          }
           grid.append(card);
         });
 
