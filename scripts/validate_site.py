@@ -176,7 +176,7 @@ def main() -> int:
         errors.append("PI data still contains the obsolete previous appointment field")
     expected_member_counts = {
         "postdoctoral-researchers": 1,
-        "graduate-student-researchers": 2,
+        "graduate-student-researchers": 4,
         "undergraduate-researchers": 1,
     }
     actual_member_counts = {
@@ -213,8 +213,28 @@ def main() -> int:
         ],
         "bio": "I am currently a master’s student at UCLA interested in applying atomic layer deposition (ALD) to novel catalysts and devices. My prior background spans industry work in silicon photonics and computational chemistry research on transition metal complexes. My favorite food is lasagna, which is also deposited layer by layer.",
     }
-    if graduate_group.get("people") != [expected_lior, expected_julian]:
-        errors.append("Graduate Student Researchers must contain complete profiles for Lior Gabay and Julian Liu")
+    expected_vedant = {
+        "name": "Vedant Bhargava",
+        "role": "M.S. Candidate, Materials Science and Engineering, University of California, Los Angeles",
+        "image": "assets/vedant-bhargava.jpg",
+        "education": [
+            "B.S., Materials Science and Engineering, National Institute of Technology Karnataka",
+        ],
+        "bio": "I am a current master’s student at UCLA and completed my bachelor’s degree at the National Institute of Technology Karnataka. My research interests include exploring high-k dielectric materials for memory-storage applications, as well as technologies related to semiconductor manufacturing and optimization. Beyond the lab, I enjoy watching Formula One, playing squash, driving go-karts, and exploring new cuisines.",
+    }
+    expected_nicky = {
+        "name": "Yi-Chun “Nicky” Chou",
+        "role": "M.S. Candidate, Materials Science and Engineering, University of California, Los Angeles",
+        "image": "assets/nicky-chou.jpg",
+        "education": [
+            "B.S., Materials Science and Engineering, National Cheng Kung University, Tainan, Taiwan",
+        ],
+        "bio": "I am currently a master’s student at UCLA. My previous research focused on sol-gel-derived aluminum oxide thin films for resistive random-access memory (RRAM) devices. My current research interests include high-κ gate dielectrics with potential applications in oxide transistors. Outside the lab, I enjoy gaming and watching TV shows.",
+    }
+    if graduate_group.get("people") != [expected_lior, expected_julian, expected_vedant, expected_nicky]:
+        errors.append(
+            "Graduate Student Researchers must contain complete profiles for Lior Gabay, Julian Liu, Vedant Bhargava, and Yi-Chun “Nicky” Chou"
+        )
     expected_alumni = [{"name": "None", "degree": "—", "year": "—", "placement": "—"}]
     if people.get("alumni") != expected_alumni:
         errors.append("Alumni placeholder row must read None | — | — | —")
