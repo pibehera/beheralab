@@ -70,6 +70,15 @@
             "B.S., Materials Science and Engineering, National Institute of Technology Karnataka"
           ],
           "bio": "I am a current master’s student at UCLA and completed my bachelor’s degree at the National Institute of Technology Karnataka. My research interests include exploring high-k dielectric materials for memory-storage applications, as well as technologies related to semiconductor manufacturing and optimization. Beyond the lab, I enjoy watching Formula One, playing squash, driving go-karts, and exploring new cuisines."
+        },
+        {
+          "name": "Yi-Chun “Nicky” Chou",
+          "role": "M.S. Candidate, Materials Science and Engineering, University of California, Los Angeles",
+          "image": "assets/nicky-chou.jpg",
+          "education": [
+            "B.S., Materials Science and Engineering, National Cheng Kung University, Tainan, Taiwan"
+          ],
+          "bio": "I am currently a master’s student at UCLA. My previous research focused on sol-gel-derived aluminum oxide thin films for resistive random-access memory (RRAM) devices. My current research interests include high-κ gate dielectrics with potential applications in oxide transistors. Outside the lab, I enjoy gaming and watching TV shows."
         }
       ]
     },
