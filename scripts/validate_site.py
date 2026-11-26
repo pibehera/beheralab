@@ -202,7 +202,8 @@ def main() -> int:
         "education": [
             "B.S., Materials Engineering, University of California, Los Angeles, 2026",
         ],
-        "bio": "I am currently a master’s student at UCLA. My previous research interests include soft robotics, polymer systems, and polymer matrix composites (PMCs). I’m currently transitioning into semiconductors and electronic materials. Outside the lab, I enjoy gaming, trying new foods, and going out with friends.",
+        "research_bio": "I am currently a master’s student at UCLA. My previous research interests include soft robotics, polymer systems, and polymer matrix composites (PMCs). I’m currently transitioning into semiconductors and electronic materials.",
+        "bio": "Outside the lab, I enjoy gaming, trying new foods, and going out with friends.",
     }
     expected_julian = {
         "name": "Julian Liu",
@@ -211,7 +212,8 @@ def main() -> int:
         "education": [
             "B.S., Physics, Massachusetts Institute of Technology, 2023",
         ],
-        "bio": "I am currently a master’s student at UCLA interested in applying atomic layer deposition (ALD) to novel catalysts and devices. My prior background spans industry work in silicon photonics and computational chemistry research on transition metal complexes. My favorite food is lasagna, which is also deposited layer by layer.",
+        "research_bio": "I am currently a master’s student at UCLA interested in applying atomic layer deposition (ALD) to novel catalysts and devices. My prior background spans industry work in silicon photonics and computational chemistry research on transition metal complexes.",
+        "bio": "My favorite food is lasagna, which is also deposited layer by layer.",
     }
     expected_vedant = {
         "name": "Vedant Bhargava",
@@ -220,7 +222,8 @@ def main() -> int:
         "education": [
             "B.S., Materials Science and Engineering, National Institute of Technology Karnataka",
         ],
-        "bio": "I am a current master’s student at UCLA and completed my bachelor’s degree at the National Institute of Technology Karnataka. My research interests include exploring high-k dielectric materials for memory-storage applications, as well as technologies related to semiconductor manufacturing and optimization. Beyond the lab, I enjoy watching Formula One, playing squash, driving go-karts, and exploring new cuisines.",
+        "research_bio": "I am a current master’s student at UCLA and completed my bachelor’s degree at the National Institute of Technology Karnataka. My research interests include exploring high-k dielectric materials for memory-storage applications, as well as technologies related to semiconductor manufacturing and optimization.",
+        "bio": "Beyond the lab, I enjoy watching Formula One, playing squash, driving go-karts, and exploring new cuisines.",
     }
     expected_nicky = {
         "name": "Yi-Chun “Nicky” Chou",
@@ -229,7 +232,8 @@ def main() -> int:
         "education": [
             "B.S., Materials Science and Engineering, National Cheng Kung University, Tainan, Taiwan",
         ],
-        "bio": "I am currently a master’s student at UCLA. My previous research focused on sol-gel-derived aluminum oxide thin films for resistive random-access memory (RRAM) devices. My current research interests include high-κ gate dielectrics with potential applications in oxide transistors. Outside the lab, I enjoy gaming and watching TV shows.",
+        "research_bio": "I am currently a master’s student at UCLA. My previous research focused on sol-gel-derived aluminum oxide thin films for resistive random-access memory (RRAM) devices. My current research interests include high-κ gate dielectrics with potential applications in oxide transistors.",
+        "bio": "Outside the lab, I enjoy gaming and watching TV shows.",
     }
     if graduate_group.get("people") != [expected_lior, expected_julian, expected_vedant, expected_nicky]:
         errors.append(
