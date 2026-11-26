@@ -61,6 +61,15 @@
             "B.S., Physics, Massachusetts Institute of Technology, 2023"
           ],
           "bio": "I am currently a master’s student at UCLA interested in applying atomic layer deposition (ALD) to novel catalysts and devices. My prior background spans industry work in silicon photonics and computational chemistry research on transition metal complexes. My favorite food is lasagna, which is also deposited layer by layer."
+        },
+        {
+          "name": "Vedant Bhargava",
+          "role": "M.S. Candidate, Materials Science and Engineering, University of California, Los Angeles",
+          "image": "assets/vedant-bhargava.jpg",
+          "education": [
+            "B.S., Materials Science and Engineering, National Institute of Technology Karnataka"
+          ],
+          "bio": "I am a current master’s student at UCLA and completed my bachelor’s degree at the National Institute of Technology Karnataka. My research interests include exploring high-k dielectric materials for memory-storage applications, as well as technologies related to semiconductor manufacturing and optimization. Beyond the lab, I enjoy watching Formula One, playing squash, driving go-karts, and exploring new cuisines."
         }
       ]
     },
