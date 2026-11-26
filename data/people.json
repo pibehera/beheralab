@@ -52,6 +52,15 @@
             "B.S., Materials Engineering, University of California, Los Angeles, 2026"
           ],
           "bio": "I am currently a master’s student at UCLA. My previous research interests include soft robotics, polymer systems, and polymer matrix composites (PMCs). I’m currently transitioning into semiconductors and electronic materials. Outside the lab, I enjoy gaming, trying new foods, and going out with friends."
+        },
+        {
+          "name": "Julian Liu",
+          "role": "M.S. Candidate, Bioengineering, University of California, Los Angeles",
+          "image": "assets/julian-liu.jpg",
+          "education": [
+            "B.S., Physics, Massachusetts Institute of Technology, 2023"
+          ],
+          "bio": "I am currently a master’s student at UCLA interested in applying atomic layer deposition (ALD) to novel catalysts and devices. My prior background spans industry work in silicon photonics and computational chemistry research on transition metal complexes. My favorite food is lasagna, which is also deposited layer by layer."
         }
       ]
     },

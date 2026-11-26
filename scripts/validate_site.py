@@ -174,8 +174,16 @@ def main() -> int:
         errors.append("PI profile must visibly offer Google Scholar and LinkedIn links")
     if "previous_appointment" in principal_investigator:
         errors.append("PI data still contains the obsolete previous appointment field")
-    if any(len(group.get("people", [])) != 1 for group in people.get("groups", [])):
-        errors.append("Each current-member group must contain exactly one member entry")
+    expected_member_counts = {
+        "postdoctoral-researchers": 1,
+        "graduate-student-researchers": 2,
+        "undergraduate-researchers": 1,
+    }
+    actual_member_counts = {
+        group.get("id"): len(group.get("people", [])) for group in people.get("groups", [])
+    }
+    if actual_member_counts != expected_member_counts:
+        errors.append("Current-member group counts do not match the expected roster")
     expected_group_headings = [
         "Postdoctoral Researchers",
         "Graduate Student Researchers",
@@ -196,8 +204,17 @@ def main() -> int:
         ],
         "bio": "I am currently a master’s student at UCLA. My previous research interests include soft robotics, polymer systems, and polymer matrix composites (PMCs). I’m currently transitioning into semiconductors and electronic materials. Outside the lab, I enjoy gaming, trying new foods, and going out with friends.",
     }
-    if graduate_group.get("people") != [expected_lior]:
-        errors.append("Graduate Student Researchers must contain Lior Gabay's complete profile")
+    expected_julian = {
+        "name": "Julian Liu",
+        "role": "M.S. Candidate, Bioengineering, University of California, Los Angeles",
+        "image": "assets/julian-liu.jpg",
+        "education": [
+            "B.S., Physics, Massachusetts Institute of Technology, 2023",
+        ],
+        "bio": "I am currently a master’s student at UCLA interested in applying atomic layer deposition (ALD) to novel catalysts and devices. My prior background spans industry work in silicon photonics and computational chemistry research on transition metal complexes. My favorite food is lasagna, which is also deposited layer by layer.",
+    }
+    if graduate_group.get("people") != [expected_lior, expected_julian]:
+        errors.append("Graduate Student Researchers must contain complete profiles for Lior Gabay and Julian Liu")
     expected_alumni = [{"name": "None", "degree": "—", "year": "—", "placement": "—"}]
     if people.get("alumni") != expected_alumni:
         errors.append("Alumni placeholder row must read None | — | — | —")
